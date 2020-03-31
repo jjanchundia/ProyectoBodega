@@ -22,7 +22,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/clientes/actualizarcliente/")]
+        [Route("actualizarcliente/")]
         public ActionResult ActualizarCliente(ClienteModel model)
         {
             try
@@ -42,7 +42,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/clientes/eliminarcliente/{idCliente}")]
+        [Route("eliminarcliente/{idCliente}")]
         public ActionResult EliminarCliente(int idCliente)
         {
             cliente.EliminarCliente(idCliente);
@@ -68,14 +68,14 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/clientes/consultarclienteporid/{idCliente}")]
+        [Route("consultarclienteporid/{idCliente}")]
         public ActionResult ConsultarClientePorId(int idCliente)
         {
             return Ok(cliente.ConsultarClientePorId(idCliente));
         }
 
         [HttpGet]
-        [Route("api/clientes/consultarclientepornombres/{nombres}")]
+        [Route("consultarclientepornombres/{nombres}")]
         public ActionResult ConsultarClientePorNombres(string nombres)
         {
             return Ok(cliente.ConsultarClientePorNombres(nombres));
