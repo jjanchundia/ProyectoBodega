@@ -20,7 +20,7 @@ namespace Api.Controllers
         Categorias oCategoria = new Categorias();
 
         [HttpPost]
-        [Route("api/categorias/actualizarcategoria/")]
+        [Route("actualizarcategoria/")]
         public ActionResult ActualizarCategoria(CategoriaModel model)
         {
             try
@@ -64,21 +64,21 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/categorias/consultarcategoriaporid/{idcategoria}")]
+        [Route("consultarcategoriaporid/{idcategoria}")]
         public ActionResult ConsultarCategoriaPorId(int idcategoria)
         {
             return Ok(categoria.ConsultarCategoriaPorId(idcategoria));
         }
 
         [HttpGet]
-        [Route("api/categorias/consultarcategoriapornombres/{nombres}")]
+        [Route("consultarcategoriapornombres/{nombres}")]
         public ActionResult ConsultarCategoriaPorNombres(string nombres)
         {
             return Ok(categoria.ConsultarCategoriaPorNombres(nombres));
         }
 
         [HttpPost]
-        [Route("api/categorias/eliminarcategoria/{idCategoria}")]
+        [Route("eliminarcategoria/{idCategoria}")]
         public ActionResult EliminarCatagoria(int idCategoria)
         {
             categoria.EliminarCategoria(idCategoria);
