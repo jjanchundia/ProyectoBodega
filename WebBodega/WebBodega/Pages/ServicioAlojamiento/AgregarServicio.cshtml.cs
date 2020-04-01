@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -17,29 +16,28 @@ namespace WebBodega
     {
         [BindProperty]
         public ServicioModel Servicio { get; set; }
-        public List<ServicioModel> Servicios { get; set; }
 
         public async Task OnGetAsync()
         {
             var httpClient = new HttpClient();
             var jsonBodega = await httpClient.GetStringAsync("https://localhost:44351/api/servicioalojamiento/consultarbodegas");
-            ViewData["IdBodega"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonBodega);
+            ViewData["IdBodegas"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonBodega);
             var jsonCliente = await httpClient.GetStringAsync("https://localhost:44351/api/servicioalojamiento/consultarclientes");
-            ViewData["IdCliente"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCliente);
+            ViewData["IdClientes"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCliente);
         }
 
-        public ActionResult OnPost(ServicioModel model)
+        public ActionResult OnPost()
         {
-            Servicio = model;
+            var servicio = Servicio;
 
             try
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://localhost:44351/api/servicioalojamiento");
+                    client.BaseAddress = new Uri("https://localhost:44351/api/ServicioAlojamiento");
 
                     //HTTP POST
-                    var postTask = client.PostAsJsonAsync("ServicioAlojamiento", Servicio);
+                    var postTask = client.PostAsJsonAsync("servicioalojamiento", servicio);
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     postTask.Wait();
                 }
@@ -49,7 +47,7 @@ namespace WebBodega
                 throw;
             }
             
-            return RedirectToAction("IndexServicio");
+            return RedirectToPage("IndexServicio");
         }
     }
 }

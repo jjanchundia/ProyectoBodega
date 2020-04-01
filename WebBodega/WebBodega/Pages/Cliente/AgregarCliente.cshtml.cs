@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using WebBodega.Models;
+using System.Linq;
 
 namespace WebBodega
 {
@@ -18,18 +21,18 @@ namespace WebBodega
 
         }
 
-        public ActionResult OnPost()
+        public async Task<ActionResult> OnPostAsync()
         {
             var cliente = Cliente;
 
             try
             {
-                //bool consulta = await ConsultarCliente(model.Cedula);
+                bool consulta = await ConsultarCliente(cliente.Cedula);
 
-                //if (!consulta)
-                //{
-                //    throw new Exception();
-                //}
+                if (!consulta)
+                {
+                    throw new Exception();
+                }
 
                 using (var client = new HttpClient())
                 {
@@ -47,6 +50,20 @@ namespace WebBodega
             }
             
             return RedirectToPage("Index");
+        }
+
+        public async Task<bool> ConsultarCliente(string cedula)
+        {
+            var httpClient = new HttpClient();
+            var json = await httpClient.GetStringAsync("http://localhost:44328/api/Clientes");
+            var clientes = JsonConvert.DeserializeObject<List<ClienteModel>>(json);
+
+            if (clientes.Any(x => x.Cedula == cedula))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

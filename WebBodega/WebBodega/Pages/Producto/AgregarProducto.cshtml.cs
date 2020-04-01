@@ -21,7 +21,7 @@ namespace WebBodega
         {
             var httpClient = new HttpClient();
             string jsonCategoria = await httpClient.GetStringAsync("https://localhost:44351/api/productos/consultarcategorias");
-            ViewData["IdCategoria"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCategoria);
+            ViewData["IdCategorias"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCategoria);
         }
 
         public ActionResult OnPost()

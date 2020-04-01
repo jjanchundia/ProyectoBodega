@@ -7,8 +7,8 @@
 
 <div class="modal-body-trans">
     
-    @*<form method="post">*@
-    @Html.AntiForgeryToken()
+    <form method="post">
+        @Html.HiddenFor(Model => Model.Servicio.IdServicio)
         <div class="row">
             <div class="editor-label col-lg-3">
                 @Html.LabelFor(model => model.Servicio.NombreServicio)
@@ -23,7 +23,8 @@
                 @Html.Label("Cliente")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdCliente")
+                @Html.DropDownList("IdClientes")
+                @Html.TextBox("IdCliente")
             </div>
         </div>
 
@@ -32,7 +33,8 @@
                 @Html.Label("Bodega")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdBodega")
+                @Html.DropDownList("IdBodegas")
+                @Html.TextBox("IdBodega")
             </div>
         </div>
 
@@ -44,41 +46,52 @@
                 <i class="glyphicon glyphicon-remove"></i> Cerrar
             </button>
         </div>
-    @*</form>*@
+    </form>
 </div>
 
 <script>
-    function modeloServicio() {
-        var modelo =
-        {
-            NombreServicio: $('#NombreServicio').val(),
-            IdCliente: $('#IdCliente').val(),
-            IdBodega: $('#IdBodega').val(),
-        };
-        return modelo;
-    }
-
-    $("#btnGrabarServicio").click(function () {
-        debugger
-
-        var model = modeloServicio();
-        $.ajax({
-            type: "POST",
-            url: "AgregarServicio",//"/?handler=OnPost",
-            data: model,
-            headers: {
-                "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
-            },
-
-            //beforeSend: function (xhr) {
-            //    xhr.setRequestHeader("XSRF-TOKEN",
-            //        $('input:hidden[name="__RequestVerificationToken"]').val());
-            //},
-
-            //dataType: "json"
-        }).done(function (data) {
-            console.log(data.result);
-        });
+    
+    $("#IdClientes").change(function () {
+        var idCliente = $('select[id=IdClientes]').val();
+        $("#IdCliente").val(idCliente);
     });
+
+    $("#IdBodegas").change(function () {
+        var idCliente = $('select[id=IdBodegas]').val();
+        $("#IdBodega").val(idCliente);
+	});
+
+    //function modeloServicio() {
+    //    var modelo =
+    //    {
+    //        NombreServicio: $('#NombreServicio').val(),
+    //        IdCliente: $('#IdCliente').val(),
+    //        IdBodega: $('#IdBodega').val(),
+    //    };
+    //    return modelo;
+    //}
+
+    //$("#btnGrabarServicio").click(function () {
+    //    debugger
+
+    //    var model = modeloServicio();
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "AgregarServicio",//"/?handler=OnPost",
+    //        data: model,
+    //        headers: {
+    //            "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
+    //        },
+
+    //        //beforeSend: function (xhr) {
+    //        //    xhr.setRequestHeader("XSRF-TOKEN",
+    //        //        $('input:hidden[name="__RequestVerificationToken"]').val());
+    //        //},
+
+    //        //dataType: "json"
+    //    }).done(function (data) {
+    //        console.log(data.result);
+    //    });
+    //});
 
 </script>
