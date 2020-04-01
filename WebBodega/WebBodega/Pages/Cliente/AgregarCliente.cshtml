@@ -1,0 +1,112 @@
+﻿@page
+@model WebBodega.AgregarClienteModel
+@{
+    ViewData["Title"] = "AgregarCliente";
+}
+
+<h1>Agregar Cliente</h1>
+
+<div class="modal-body-trans">
+    @Html.HiddenFor(Model => Model.Cliente.IdCliente)
+
+    <form method="post">
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.LabelFor(model => model.Cliente.Nombres, new { @class = "label-fenix-parametro" })
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.TextBoxFor(model => model.Cliente.Nombres, new { @class = "form-control input-sm", @maxlength = "80" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.LabelFor(model => model.Cliente.Apellidos, new { @class = "label-fenix-parametro" })
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.TextBoxFor(model => model.Cliente.Apellidos, new { @class = "form-control input-sm", @maxlength = "80" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.LabelFor(model => model.Cliente.Cedula, new { @class = "label-fenix-parametro" })
+                @Html.ValidationMessage("ya existe")
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.TextBoxFor(model => model.Cliente.Cedula, new { @class = "form-control input-sm", @maxlength = "80" })
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button id="btnGrabarCliente" value="Grabar" class="btn btn-sm btn-success">
+                <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
+            </button>
+            <button id="btnCerrarModaCliente" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
+                <i class="glyphicon glyphicon-remove"></i> Cerrar
+            </button>
+        </div>
+</form>
+</div>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
+
+
+@*<script>
+    function modeloCliente()
+    {
+        var modelo =
+        {
+            Nombres: $('#Nombres').val(),
+            Apellidos: $('#Apellidos').val(),
+            Cedula: $('#Cedula').val(),
+        };
+        return modelo;
+    }
+
+    function validarDatos() {
+        var model = modeloCliente();
+        if (model.Nombres === "") {
+            alert("Ingrese Nombre");
+            return false;
+        }
+
+        if (model.Apellidos === "") {
+            alert("Ingrese Apellidos");
+            return false;
+        }
+
+        if (model.Cedula === "") {
+            alert("Ingrese Cedula");
+            return false;
+        }
+        return true;
+    };
+
+    $("#btnGrabarCliente").click(function () {
+        var model = modeloCliente();
+
+        datos = validarDatos();
+        if (!datos) {
+            return false;
+        }
+
+        $.ajax(
+            {
+                cache: false,
+                type: 'POST',
+                url: '@Url.Action("GuardarCliente", "Cliente")',
+                data: model,
+                success: function () {
+                    alert("Cliente Agregado");
+                    $("#btnCerrarModaCliente").click();
+                    $("#btnConsultar").click();
+                },
+                error: function (xhr) {
+                    alert("No se puede agregar, ya existe este número de cedula");
+                }
+            });
+    });
+</script>*@

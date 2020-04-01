@@ -15,7 +15,7 @@ namespace DAO.DAO
                 using (BodegaContext bd = new BodegaContext())
                 {
                     ServicioAlojamiento servicio = new ServicioAlojamiento();
-                    servicio.IdServicio = model.IdServicio;
+                    //servicio.IdServicio = model.IdServicio;
                     servicio.NombreServicio = model.NombreServicio;
                     servicio.IdCliente = model.IdCliente;
                     servicio.IdBodega = model.IdBodega;

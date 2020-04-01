@@ -19,5 +19,7 @@ namespace WebBodega
             var json = await httpClient.GetStringAsync("https://localhost:44351/api/Clientes");
             Clientes = JsonConvert.DeserializeObject<List<ClienteModel>>(json);
         }
+
+
     }
 }

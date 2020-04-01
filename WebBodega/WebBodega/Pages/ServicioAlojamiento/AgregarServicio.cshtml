@@ -1,0 +1,84 @@
+﻿@page
+@model WebBodega.AgregarServicioModel
+
+    <script src="~/js/jquery-3.4.1.js"></script>
+
+<h1>Agregar Servicio</h1>
+
+<div class="modal-body-trans">
+    
+    @*<form method="post">*@
+    @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.LabelFor(model => model.Servicio.NombreServicio)
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.TextBox("NombreServicio")
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.Label("Cliente")
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.DropDownList("IdCliente")
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.Label("Bodega")
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.DropDownList("IdBodega")
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button id="btnGrabarServicio" value="Grabar" class="btn btn-sm btn-success">
+                <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
+            </button>
+            <button id="btnCerrarModaCliente" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
+                <i class="glyphicon glyphicon-remove"></i> Cerrar
+            </button>
+        </div>
+    @*</form>*@
+</div>
+
+<script>
+    function modeloServicio() {
+        var modelo =
+        {
+            NombreServicio: $('#NombreServicio').val(),
+            IdCliente: $('#IdCliente').val(),
+            IdBodega: $('#IdBodega').val(),
+        };
+        return modelo;
+    }
+
+    $("#btnGrabarServicio").click(function () {
+        debugger
+
+        var model = modeloServicio();
+        $.ajax({
+            type: "POST",
+            url: "AgregarServicio",//"/?handler=OnPost",
+            data: model,
+            headers: {
+                "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+
+            //beforeSend: function (xhr) {
+            //    xhr.setRequestHeader("XSRF-TOKEN",
+            //        $('input:hidden[name="__RequestVerificationToken"]').val());
+            //},
+
+            //dataType: "json"
+        }).done(function (data) {
+            console.log(data.result);
+        });
+    });
+
+</script>

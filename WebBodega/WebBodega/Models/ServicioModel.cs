@@ -7,7 +7,8 @@ namespace WebBodega.Models
 {
     public class ServicioModel
     {
-        public int IdServicio { get; set; }
+        public string IdServicio { get; set; }
+        public int Value { get; set; }
         public string NombreServicio { get; set; }
         public int IdCliente { get; set; }
         public string NombreCliente { get; set; }
