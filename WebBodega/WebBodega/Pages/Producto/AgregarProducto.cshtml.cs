@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using WebBodega.Models;
 
 namespace WebBodega
@@ -15,9 +17,11 @@ namespace WebBodega
     {
         [BindProperty]
         public ProductoModel Producto { get; set; }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-
+            var httpClient = new HttpClient();
+            string jsonCategoria = await httpClient.GetStringAsync("https://localhost:44351/api/productos/consultarcategorias");
+            ViewData["IdCategoria"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCategoria);
         }
 
         public ActionResult OnPost()
@@ -40,7 +44,7 @@ namespace WebBodega
             {
                 throw;
             }
-            return RedirectToAction("Cliente");
+            return RedirectToAction("IndexProducto");
         }
     }
 }

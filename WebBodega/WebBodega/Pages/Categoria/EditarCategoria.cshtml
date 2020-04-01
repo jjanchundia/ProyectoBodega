@@ -1,13 +1,13 @@
 ﻿@page
-@model WebBodega.AgregarCategoriaModel
+@model WebBodega.EditarCategoriaModel
 @{
-    ViewData["Title"] = "AgregarCategoria";
+    ViewData["Title"] = "EditarCategoria";
 }
 
-<h1>Agregar Categoria</h1>
+<h2>Editar Categoria</h2>
 
 <div class="modal-body-trans">
-    
+    @Html.HiddenFor(model => model.Categoria.IdCategoria)
     <form method="post">
         <div class="row">
             <div class="editor-label col-lg-3">

@@ -1,46 +1,48 @@
 ﻿@page
-@model WebBodega.AgregarCategoriaModel
+@model WebBodega.EditarClienteModel
 @{
-    ViewData["Title"] = "AgregarCategoria";
+    ViewData["Title"] = "EditarCliente";
 }
 
-<h1>Agregar Categoria</h1>
+<h1>Editar Cliente</h1>
 
 <div class="modal-body-trans">
-    
+    @Html.HiddenFor(Model => Model.Cliente.IdCliente)
+
     <form method="post">
         <div class="row">
             <div class="editor-label col-lg-3">
-                @Html.Label("Nombre")
+                @Html.LabelFor(model => model.Cliente.Nombres, new { @class = "label-fenix-parametro" })
             </div>
             <div class="editor-field col-lg-6">
-                @Html.TextBoxFor(model => model.Categoria.Nombre, new { @class = "form-control input-sm", @maxlength = "80" })
+                @Html.TextBoxFor(model => model.Cliente.Nombres, new { @class = "form-control input-sm", @maxlength = "80" })
             </div>
         </div>
 
         <div class="row">
             <div class="editor-label col-lg-3">
-                @Html.Label("Descripción")
+                @Html.LabelFor(model => model.Cliente.Apellidos, new { @class = "label-fenix-parametro" })
             </div>
             <div class="editor-field col-lg-6">
-                @Html.TextBoxFor(model => model.Categoria.Descripcion, new { @class = "form-control input-sm", @maxlength = "80" })
+                @Html.TextBoxFor(model => model.Cliente.Apellidos, new { @class = "form-control input-sm", @maxlength = "80" })
             </div>
         </div>
 
         <div class="row">
             <div class="editor-label col-lg-3">
-                @Html.Label("Bodega")
+                @Html.LabelFor(model => model.Cliente.Cedula, new { @class = "label-fenix-parametro" })
+                @Html.ValidationMessage("ya existe")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdBodega")
+                @Html.TextBoxFor(model => model.Cliente.Cedula, new { @class = "form-control input-sm", @maxlength = "80" })
             </div>
         </div>
 
         <div class="modal-footer">
-            <button id="btnGrabarCategoria" value="Grabar" class="btn btn-sm btn-success">
+            <button id="btnGrabarCliente" value="Grabar" class="btn btn-sm btn-success">
                 <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
             </button>
-            <button id="btnCerrarCategoria" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
+            <button id="btnCerrarModaCliente" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
                 <i class="glyphicon glyphicon-remove"></i> Cerrar
             </button>
         </div>

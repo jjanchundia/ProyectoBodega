@@ -4,5 +4,116 @@
     ViewData["Title"] = "AgregarProducto";
 }
 
-<h1>AgregarProducto</h1>
+<h1>Agregar Producto</h1>
+
+<div class="modal-body-trans">
+    <form method="post">
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.Label("Nombre")
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.TextBoxFor(model => model.Producto.Nombre, new { @class = "form-control input-sm", @maxlength = "80" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.Label("Descripción")
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.TextBoxFor(model => model.Producto.Descripcion, new { @class = "form-control input-sm", @maxlength = "80" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.Label("Fecha Expiración")
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.EditorFor(model => model.Producto.FechaExpiracion, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="editor-label col-lg-3">
+                @Html.Label("Categoria")
+            </div>
+            <div class="editor-field col-lg-6">
+                @Html.DropDownList("IdCategoria")
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button id="btnGrabarProducto" value="Grabar" class="btn btn-sm btn-success">
+                <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
+            </button>
+            <button id="btnCerrarProducto" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
+                <i class="glyphicon glyphicon-remove"></i> Cerrar
+            </button>
+        </div>
+    </form>
+</div>
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+
+
+@*<script>
+        function modeloCliente()
+        {
+            var modelo =
+            {
+                Nombres: $('#Nombres').val(),
+                Apellidos: $('#Apellidos').val(),
+                Cedula: $('#Cedula').val(),
+            };
+            return modelo;
+        }
+
+        function validarDatos() {
+            var model = modeloCliente();
+            if (model.Nombres === "") {
+                alert("Ingrese Nombre");
+                return false;
+            }
+
+            if (model.Apellidos === "") {
+                alert("Ingrese Apellidos");
+                return false;
+            }
+
+            if (model.Cedula === "") {
+                alert("Ingrese Cedula");
+                return false;
+            }
+            return true;
+        };
+
+        $("#btnGrabarCliente").click(function () {
+            var model = modeloCliente();
+
+            datos = validarDatos();
+            if (!datos) {
+                return false;
+            }
+
+            $.ajax(
+                {
+                    cache: false,
+                    type: 'POST',
+                    url: '@Url.Action("GuardarCliente", "Cliente")',
+                    data: model,
+                    success: function () {
+                        alert("Cliente Agregado");
+                        $("#btnCerrarModaCliente").click();
+                        $("#btnConsultar").click();
+                    },
+                    error: function (xhr) {
+                        alert("No se puede agregar, ya existe este número de cedula");
+                    }
+                });
+        });
+    </script>*@
 

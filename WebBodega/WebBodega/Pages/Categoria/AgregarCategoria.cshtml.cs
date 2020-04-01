@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using WebBodega.Models;
 
 namespace WebBodega
@@ -15,9 +17,11 @@ namespace WebBodega
     {
         [BindProperty]
         public CategoriaModel Categoria { get; set; }
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-
+            var httpClient = new HttpClient();
+            var jsonBodega = await httpClient.GetStringAsync("https://localhost:44351/api/categorias/consultarbodegas");
+            ViewData["IdBodega"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonBodega);
         }
 
         public ActionResult OnPost()

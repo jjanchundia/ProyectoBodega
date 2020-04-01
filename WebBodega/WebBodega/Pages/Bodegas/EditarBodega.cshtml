@@ -1,20 +1,22 @@
 ﻿@page
-@model WebBodega.AgregarCategoriaModel
+@model WebBodega.EditarBodegaModel
 @{
-    ViewData["Title"] = "AgregarCategoria";
+    ViewData["Title"] = "EditarBodega";
 }
 
-<h1>Agregar Categoria</h1>
+<h1>Editar Bodega</h1>
 
 <div class="modal-body-trans">
-    
     <form method="post">
+
+        @Html.HiddenFor(model => model.Bodega.IdBodega)
+
         <div class="row">
             <div class="editor-label col-lg-3">
                 @Html.Label("Nombre")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.TextBoxFor(model => model.Categoria.Nombre, new { @class = "form-control input-sm", @maxlength = "80" })
+                @Html.TextBoxFor(model => model.Bodega.Nombre, new { @class = "form-control input-sm", @maxlength = "80" })
             </div>
         </div>
 
@@ -23,24 +25,15 @@
                 @Html.Label("Descripción")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.TextBoxFor(model => model.Categoria.Descripcion, new { @class = "form-control input-sm", @maxlength = "80" })
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="editor-label col-lg-3">
-                @Html.Label("Bodega")
-            </div>
-            <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdBodega")
+                @Html.TextBoxFor(model => model.Bodega.Descripcion, new { @class = "form-control input-sm", @maxlength = "80" })
             </div>
         </div>
 
         <div class="modal-footer">
-            <button id="btnGrabarCategoria" value="Grabar" class="btn btn-sm btn-success">
+            <button id="btnGrabarBodega" value="Grabar" class="btn btn-sm btn-success">
                 <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
             </button>
-            <button id="btnCerrarCategoria" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
+            <button id="btnCerrarBodega" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
                 <i class="glyphicon glyphicon-remove"></i> Cerrar
             </button>
         </div>
