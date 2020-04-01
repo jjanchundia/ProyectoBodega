@@ -7,9 +7,7 @@
 <h2>Consulta de Productos</h2>
 
 <div class="editor-field col-lg-2">
-    <button id="btnAgregarProducto" type="submit" class="btn btn-primary btnAgregar" data-toggle="modal" data-target="#ModalAgregarCliente">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar
-    </button>
+    <a asp-page="/Producto/AgregarProducto">Agregar</a>
 </div>
 
 @*@using (Html.BeginForm("ConsultarClientePorCedula", "Cliente"))
@@ -53,18 +51,7 @@
         @Html.DisplayFor(modelItem => item.FechaExpiracion)
     </td>
     <td>
-        @*@Html.ActionLink(" ", "EditarCliente", "Cliente", new { idCliente = item.IdCliente }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
-            @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })*@
-        <button class="btn btn-xs btn-primary"
-                id="btnEditarCliente"
-                data-prop="@item.IdProducto"
-                data-tooltip="tooltip"
-                title="Editar Sección!"
-                data-placement="top"
-                data-toggle="modal"
-                data-target="#ModalEditarCliente">
-            Editar
-        </button>
+        <a asp-page="/Producto/EditarProducto" asp-route-id="@item.IdProducto">Editar</a>
 
         <button class="btn btn-xs btn-danger"
                 id="btnEliminarCliente"

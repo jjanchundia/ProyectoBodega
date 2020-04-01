@@ -45,7 +45,8 @@ namespace WebBodega
             {
                 throw;
             }
-            return RedirectToAction("Cliente");
+            
+            return RedirectToPage("Index");
         }
     }
 }

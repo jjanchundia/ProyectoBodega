@@ -15,11 +15,14 @@ namespace WebBodega
     {
         [BindProperty]
         public CategoriaModel Categoria { get; set; }
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int id)
         {
+            int idCategoria = id;
             var httpClient = new HttpClient();
             var jsonBodega = await httpClient.GetStringAsync("https://localhost:44351/api/categorias/consultarbodegas");
             ViewData["IdBodega"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonBodega);
+            var json = await httpClient.GetStringAsync($"https://localhost:44351/api/categorias/consultarcategoriaporid/{idCategoria}");
+            Categoria = JsonConvert.DeserializeObject<CategoriaModel>(json);
         }
     }
 }

@@ -7,9 +7,11 @@
 <h2>Consulta de Categorias</h2>
 
 <div class="editor-field col-lg-2">
-    <button id="btnAgregarCliente" type="submit" class="btn btn-primary btnAgregar" data-toggle="modal" data-target="#ModalAgregarCliente">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar
-    </button>
+    <ul>
+        <li>
+            <a asp-page="/Categoria/AgregarCategoria">Editar</a>
+        </li>
+    </ul>
 </div>
 
 @*@using (Html.BeginForm("ConsultarClientePorCedula", "Cliente"))
@@ -47,27 +49,7 @@
                 @Html.DisplayFor(modelItem => item.BodegaNombre)
             </td>
             <td>
-                @*@Html.ActionLink(" ", "EditarCliente", "Cliente", new { idCliente = item.IdCliente }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
-                    @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })*@
-                <button class="btn btn-xs btn-primary"
-                        id="btnEditarCliente"
-                        data-prop="@item.IdBodega"
-                        data-tooltip="tooltip"
-                        title="Editar Sección!"
-                        data-placement="top"
-                        data-toggle="modal"
-                        data-target="#ModalEditarCliente">
-                    Editar
-                </button>
-
-                <button class="btn btn-xs btn-danger"
-                        id="btnEliminarCliente"
-                        data-prop="@item.IdBodega"
-                        data-tooltip="tooltip"
-                        data-placement="top"
-                        title="Eliminar Sección!">
-                    Eliminar
-                </button>
+                <a asp-page="/Categoria/EditarCategoria" asp-route-id="@item.IdCategoria">Editar</a>
             </td>
         </tr>
     }
