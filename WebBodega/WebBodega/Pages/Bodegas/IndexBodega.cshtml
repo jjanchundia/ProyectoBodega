@@ -1,0 +1,107 @@
+﻿@page
+@model WebBodega.IndexBodegaModel
+@{
+    ViewData["Title"] = "IndexBodega";
+}
+
+<h2>Consulta de Bodegas</h2>
+
+<div class="editor-field col-lg-2">
+    <button id="btnAgregarCliente" type="submit" class="btn btn-primary btnAgregar" data-toggle="modal" data-target="#ModalAgregarCliente">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar
+    </button>
+</div>
+
+@*@using (Html.BeginForm("ConsultarClientePorCedula", "Cliente"))
+    {
+        <label>Nombre</label>
+        <input type="text" name="nombres" />
+
+        <button id="btnConsultar" type="submit">Consutar</button>
+    }*@
+
+<table class="table" id="tblClientes">
+    <tr>
+        <th>
+            @Html.DisplayName("Nombre")
+        </th>
+        <th>
+            @Html.DisplayName("Descripcion")
+        </th>
+        <th>
+            @Html.DisplayName("Cedula")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Bodegas)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @*@Html.ActionLink(" ", "EditarCliente", "Cliente", new { idCliente = item.IdCliente }, new { @class = "glyphicon glyphicon-edit btn btn-primary" })
+                    @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })*@
+                <button class="btn btn-xs btn-primary"
+                        id="btnEditarCliente"
+                        data-prop="@item.IdBodega"
+                        data-tooltip="tooltip"
+                        title="Editar Sección!"
+                        data-placement="top"
+                        data-toggle="modal"
+                        data-target="#ModalEditarCliente">
+                    Editar
+                </button>
+
+                <button class="btn btn-xs btn-danger"
+                        id="btnEliminarCliente"
+                        data-prop="@item.IdBodega"
+                        data-tooltip="tooltip"
+                        data-placement="top"
+                        title="Eliminar Sección!">
+                    Eliminar
+                </button>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="ModalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalAgregarCliente">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="myModalAgregarCliente">Agregar Cliente</h4>
+            </div>
+            <div id="divAgregarCliente">
+                <div class="modal-body-trans">
+                    Cargando...
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalEditarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalEditarCliente">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="myModalEditarCliente">Editar Clientes</h4>
+            </div>
+            <div id="divEditarCliente">
+                <div class="modal-body-trans">
+                    Cargando...
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
