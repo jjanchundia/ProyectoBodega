@@ -77,7 +77,7 @@ namespace Api.Controllers
             return Ok(categoria.ConsultarCategoriaPorNombres(nombres));
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("eliminarcategoria/{idCategoria}")]
         public ActionResult EliminarCatagoria(int idCategoria)
         {

@@ -1,11 +1,16 @@
 ﻿@page
 @model WebBodega.EditarProductoModel
 
+    <script src="~/js/jquery-3.4.1.js"></script>
+
 <h2>Editar Producto</h2>
 
 <div class="modal-body-trans">
-    @Html.HiddenFor(model => model.Producto.IdProducto)
+    
     <form method="post">
+        
+        @Html.HiddenFor(model => model.Producto.IdProducto)
+
         <div class="row">
             <div class="editor-label col-lg-3">
                 @Html.Label("Nombre")
@@ -38,7 +43,8 @@
                 @Html.Label("Categoria")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdCategoria")
+                @Html.DropDownList("IdCategorias")
+                @Html.TextBox("IdCategoria")
             </div>
         </div>
 
@@ -54,5 +60,9 @@
 </div>
 
 <script>
-
+$("#IdCategorias").change(function () {
+         debugger
+        var idCategoria = $('select[id=IdCategorias]').val();
+        $("#IdCategoria").val(idCategoria);
+    });
 </script>

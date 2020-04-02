@@ -6,8 +6,9 @@
 <h1>Agregar Producto</h1>
 
 <div class="modal-body-trans">
-    <form method="post">
         @Html.HiddenFor(Model => Model.Producto.IdProducto)
+
+    <form method="post">
         <div class="row">
             <div class="editor-label col-lg-3">
                 @Html.Label("Nombre")
@@ -41,7 +42,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.DropDownList("IdCategorias")
-                @Html.TextBox("IdCategoria")
+                @Html.TextBox("IdCategoriabb")
             </div>
         </div>
 

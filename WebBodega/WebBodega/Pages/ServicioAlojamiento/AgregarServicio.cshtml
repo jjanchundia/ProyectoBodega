@@ -6,9 +6,9 @@
 <h1>Agregar Servicio</h1>
 
 <div class="modal-body-trans">
+        @Html.HiddenFor(Model => Model.Servicio.IdServicio)
     
     <form method="post">
-        @Html.HiddenFor(Model => Model.Servicio.IdServicio)
         <div class="row">
             <div class="editor-label col-lg-3">
                 @Html.LabelFor(model => model.Servicio.NombreServicio)

@@ -21,6 +21,9 @@
 <table class="table" id="tblProducto">
     <tr>
         <th>
+            @Html.DisplayName("IdProducto")
+        </th>
+        <th>
             @Html.DisplayName("Nombre")
         </th>
         <th>
@@ -39,6 +42,9 @@
     {
 <tr>
     <td>
+        @Html.DisplayFor(modelItem => item.IdProducto)
+    </td>
+    <td>
         @Html.DisplayFor(modelItem => item.Nombre)
     </td>
     <td>
@@ -52,49 +58,10 @@
     </td>
     <td>
         <a asp-page="/Producto/EditarProducto" asp-route-id="@item.IdProducto">Editar</a>
-
-        <button class="btn btn-xs btn-danger"
-                id="btnEliminarCliente"
-                data-prop="@item.IdProducto"
-                data-tooltip="tooltip"
-                data-placement="top"
-                title="Eliminar Sección!">
-            Eliminar
-        </button>
+        <a asp-page="./IndexProducto" onclick="return confirm('Eliminar Producto?');"
+           asp-page-handler="Delete" asp-route-id="@item.IdProducto">Eliminar</a>
     </td>
 </tr>
     }
 
 </table>
-
-<div class="modal fade" id="ModalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalAgregarCliente">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="myModalAgregarCliente">Agregar Cliente</h4>
-            </div>
-            <div id="divAgregarCliente">
-                <div class="modal-body-trans">
-                    Cargando...
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="ModalEditarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalEditarCliente">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="myModalEditarCliente">Editar Clientes</h4>
-            </div>
-            <div id="divEditarCliente">
-                <div class="modal-body-trans">
-                    Cargando...
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>

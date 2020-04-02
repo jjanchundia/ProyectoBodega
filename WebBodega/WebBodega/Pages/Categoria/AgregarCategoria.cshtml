@@ -1,8 +1,5 @@
 ﻿@page
 @model WebBodega.AgregarCategoriaModel
-@{
-    ViewData["Title"] = "AgregarCategoria";
-}
 
 <h1>Agregar Categoria</h1>
 
@@ -46,66 +43,3 @@
         </div>
     </form>
 </div>
-
-@*@section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }*@
-
-
-@*<script>
-        function modeloCliente()
-        {
-            var modelo =
-            {
-                Nombres: $('#Nombres').val(),
-                Apellidos: $('#Apellidos').val(),
-                Cedula: $('#Cedula').val(),
-            };
-            return modelo;
-        }
-
-        function validarDatos() {
-            var model = modeloCliente();
-            if (model.Nombres === "") {
-                alert("Ingrese Nombre");
-                return false;
-            }
-
-            if (model.Apellidos === "") {
-                alert("Ingrese Apellidos");
-                return false;
-            }
-
-            if (model.Cedula === "") {
-                alert("Ingrese Cedula");
-                return false;
-            }
-            return true;
-        };
-
-        $("#btnGrabarCliente").click(function () {
-            var model = modeloCliente();
-
-            datos = validarDatos();
-            if (!datos) {
-                return false;
-            }
-
-            $.ajax(
-                {
-                    cache: false,
-                    type: 'POST',
-                    url: '@Url.Action("GuardarCliente", "Cliente")',
-                    data: model,
-                    success: function () {
-                        alert("Cliente Agregado");
-                        $("#btnCerrarModaCliente").click();
-                        $("#btnConsultar").click();
-                    },
-                    error: function (xhr) {
-                        alert("No se puede agregar, ya existe este número de cedula");
-                    }
-                });
-        });
-    </script>*@
-

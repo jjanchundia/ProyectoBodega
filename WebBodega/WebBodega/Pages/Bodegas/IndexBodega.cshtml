@@ -41,7 +41,8 @@
             </td>
             <td>
                 <a asp-page="/Bodegas/EditarBodega" asp-route-id="@item.IdBodega">Editar</a>
-
+                <a asp-page="./IndexBodega" onclick="return confirm('Eliminar Bodega?');" 
+                   asp-page-handler="Delete" asp-route-id="@item.IdBodega">Eliminar</a>
             </td>
         </tr>
     }

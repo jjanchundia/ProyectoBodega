@@ -9,7 +9,7 @@
 <div class="editor-field col-lg-2">
     <ul>
         <li>
-            <a asp-page="/Categoria/AgregarCategoria">Editar</a>
+            <a asp-page="/Categoria/AgregarCategoria">Agregar</a>
         </li>
     </ul>
 </div>
@@ -50,40 +50,10 @@
             </td>
             <td>
                 <a asp-page="/Categoria/EditarCategoria" asp-route-id="@item.IdCategoria">Editar</a>
+                <a asp-page="./IndexCategoria" onclick="return confirm('Eliminar item?');"
+                   asp-page-handler="Delete" asp-route-id="@item.IdCategoria">Eliminar</a>
             </td>
         </tr>
     }
 
 </table>
-
-<div class="modal fade" id="ModalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalAgregarCliente">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="myModalAgregarCliente">Agregar Cliente</h4>
-            </div>
-            <div id="divAgregarCliente">
-                <div class="modal-body-trans">
-                    Cargando...
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="ModalEditarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalEditarCliente">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="myModalEditarCliente">Editar Clientes</h4>
-            </div>
-            <div id="divEditarCliente">
-                <div class="modal-body-trans">
-                    Cargando...
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>

@@ -11,14 +11,6 @@
     </ul>
 </div>
 
-@*@using (Html.BeginForm("ConsultarClientePorCedula", "Cliente"))
-    {
-        <label>Nombre</label>
-        <input type="text" name="nombres" />
-
-        <button id="btnConsultar" type="submit">Consutar</button>
-    }*@
-
 <table class="table" id="tblServicio">
     <tr>
         <th>
@@ -52,36 +44,3 @@
     }
 
 </table>
-
-<div class="modal fade" id="ModalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalAgregarCliente">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="myModalAgregarCliente">Agregar Cliente</h4>
-            </div>
-            <div id="divAgregarCliente">
-                <div class="modal-body-trans">
-                    Cargando...
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="ModalEditarCliente" tabindex="-1" role="dialog" aria-labelledby="myModalEditarCliente">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="myModalEditarCliente">Editar Clientes</h4>
-            </div>
-            <div id="divEditarCliente">
-                <div class="modal-body-trans">
-                    Cargando...
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-

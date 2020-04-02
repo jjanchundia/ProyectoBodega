@@ -40,7 +40,7 @@ namespace Api.Controllers
             return Ok("Exito Actualizado");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("eliminarproductos/{idProducto}")]
         public ActionResult EliminarBodega(int idProducto)
         {

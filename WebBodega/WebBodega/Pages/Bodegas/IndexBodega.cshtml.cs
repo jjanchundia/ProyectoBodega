@@ -19,5 +19,13 @@ namespace WebBodega
             var json = await httpClient.GetStringAsync("https://localhost:44351/api/Bodegas");
             Bodegas = JsonConvert.DeserializeObject<List<BodegaModel>>(json);
         }
+
+        public async Task<IActionResult> OnGetDelete(int id)
+        {
+            int idBodega = id;
+            var httpClient = new HttpClient();
+            await httpClient.GetStringAsync($"https://localhost:44351/api/Bodegas/eliminarbodegas/{idBodega}");
+            return RedirectToPage("IndexBodega");
+        }
     }
 }

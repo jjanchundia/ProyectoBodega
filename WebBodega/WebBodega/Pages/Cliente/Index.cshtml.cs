@@ -20,6 +20,12 @@ namespace WebBodega
             Clientes = JsonConvert.DeserializeObject<List<ClienteModel>>(json);
         }
 
-
+        public async Task<ActionResult> OnGetDelete(int id)
+        {
+            int idCliente = id;
+            var httpClient = new HttpClient();
+            await httpClient.GetStringAsync($"https://localhost:44351/api/clientes/eliminarcliente/{idCliente}");
+            return RedirectToPage("Index");
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Api.Controllers
             return Ok("Exito Actualizado");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("eliminarbodegas/{idBodega}")]
         public ActionResult EliminarBodega(int idBodega)
         {

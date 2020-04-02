@@ -1,14 +1,13 @@
 ﻿@page
 @model WebBodega.EditarCategoriaModel
-@{
-    ViewData["Title"] = "EditarCategoria";
-}
 
 <h2>Editar Categoria</h2>
 
 <div class="modal-body-trans">
-    @Html.HiddenFor(model => model.Categoria.IdCategoria)
     <form method="post">
+
+    @Html.HiddenFor(model => model.Categoria.IdCategoria)
+
         <div class="row">
             <div class="editor-label col-lg-3">
                 @Html.Label("Nombre")
@@ -32,7 +31,8 @@
                 @Html.Label("Bodega")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdBodega")
+                @Html.DropDownList("IdBodegas")
+                @Html.TextBox("IdBodega")
             </div>
         </div>
 
@@ -47,65 +47,12 @@
     </form>
 </div>
 
-@*@section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }*@
+<script src="~/js/jquery-3.4.1.js"></script>
 
-
-@*<script>
-        function modeloCliente()
-        {
-            var modelo =
-            {
-                Nombres: $('#Nombres').val(),
-                Apellidos: $('#Apellidos').val(),
-                Cedula: $('#Cedula').val(),
-            };
-            return modelo;
-        }
-
-        function validarDatos() {
-            var model = modeloCliente();
-            if (model.Nombres === "") {
-                alert("Ingrese Nombre");
-                return false;
-            }
-
-            if (model.Apellidos === "") {
-                alert("Ingrese Apellidos");
-                return false;
-            }
-
-            if (model.Cedula === "") {
-                alert("Ingrese Cedula");
-                return false;
-            }
-            return true;
-        };
-
-        $("#btnGrabarCliente").click(function () {
-            var model = modeloCliente();
-
-            datos = validarDatos();
-            if (!datos) {
-                return false;
-            }
-
-            $.ajax(
-                {
-                    cache: false,
-                    type: 'POST',
-                    url: '@Url.Action("GuardarCliente", "Cliente")',
-                    data: model,
-                    success: function () {
-                        alert("Cliente Agregado");
-                        $("#btnCerrarModaCliente").click();
-                        $("#btnConsultar").click();
-                    },
-                    error: function (xhr) {
-                        alert("No se puede agregar, ya existe este número de cedula");
-                    }
-                });
-        });
-    </script>*@
-
+<script>
+    $("#IdBodegas").change(function () {
+         debugger
+        var idBodega = $('select[id=IdBodegas]').val();
+        $("#IdBodega").val(idBodega);
+    });
+</script>
