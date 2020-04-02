@@ -1,0 +1,77 @@
+﻿@page
+@model WebBodega.IndexReporteModel
+
+    <script src="~/js/jquery-3.4.1.js"></script>
+
+<h2>Reporte</h2>
+
+<form method="post">
+    <div class="row">
+
+        <div class="col-lg-2">
+            <h4>
+                @Html.Label("Cliente")
+            </h4>
+        </div>
+        <div class="col-lg-3">
+            @Html.DropDownList("IdClientes")
+            @Html.HiddenFor(model => model.Servicio.IdCliente, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdCliente" })
+        </div>
+       
+        <div class="editor-label col-lg-2">
+            <button id="btnConsultaDatosReporte" asp-page-handler="Reporte" value="Grabar" class="btn btn-sm btn-success">
+                <i class="glyphicon glyphicon-floppy-disk"></i> Consultar Reporte
+            </button>
+        </div>
+
+    </div>
+
+    <h2>Productos a Caducar</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Nombre")
+            </th>
+            <th>
+                @Html.DisplayName("Descripción")
+            </th>
+            <th>
+                @Html.DisplayName("Categoria")
+            </th>
+            <th>
+                @Html.DisplayName("Fecha Expiración")
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Producto)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreCategoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaExpiracion)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</form>
+
+<script>
+
+    $("#IdClientes").change(function () {
+         debugger
+        var idCategoria = $('select[id=IdClientes]').val();
+        $("#IdCliente").val(idCategoria);
+    });
+
+</script>
