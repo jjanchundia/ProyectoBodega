@@ -2,6 +2,8 @@
 @model WebBodega.EditarCategoriaModel
 
 <h2>Editar Categoria</h2>
+<script src="~/js/jquery-3.4.1.js"></script>
+
 
 <div class="modal-body-trans">
     <form method="post">
@@ -40,9 +42,7 @@
             <button id="btnGrabarCategoria" value="Grabar" class="btn btn-sm btn-success">
                 <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
             </button>
-            <button id="btnCerrarCategoria" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
-                <i class="glyphicon glyphicon-remove"></i> Cerrar
-            </button>
+            <a asp-page="/Categoria/IndexCategoria" class="btn btn-sm btn-danger">Cerrar</a>
         </div>
     </form>
 </div>

@@ -1,6 +1,8 @@
 ﻿@page
 @model WebBodega.AgregarCategoriaModel
 
+    <script src="~/js/jquery-3.4.1.js"></script>
+
 <h1>Agregar Categoria</h1>
 
 <div class="modal-body-trans">
@@ -29,7 +31,8 @@
                 @Html.Label("Bodega")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdBodega")
+                @Html.DropDownList("IdBodegas")
+                @Html.TextBox("IdBodega")
             </div>
         </div>
 
@@ -37,9 +40,15 @@
             <button id="btnGrabarCategoria" value="Grabar" class="btn btn-sm btn-success">
                 <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
             </button>
-            <button id="btnCerrarCategoria" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
-                <i class="glyphicon glyphicon-remove"></i> Cerrar
-            </button>
+            <a asp-page="/Categoria/IndexCategoria" class="btn btn-sm btn-danger">Cerrar</a>
         </div>
     </form>
 </div>
+
+<script>
+$("#IdBodegas").change(function () {
+         debugger
+        var idCategoria = $('select[id=IdBodegas]').val();
+        $("#IdBodega").val(idCategoria);
+    });
+</script>
