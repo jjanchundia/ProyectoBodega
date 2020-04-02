@@ -44,7 +44,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.DropDownList("IdCategorias")
-                @Html.TextBox("IdCategoria")
+                @Html.HiddenFor(model => model.Producto.IdCategoria, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdCategoria" })
             </div>
         </div>
 

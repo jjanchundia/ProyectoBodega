@@ -35,7 +35,7 @@ namespace WebBodega
             {
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://localhost:44351/api/Productos");
+                    client.BaseAddress = new Uri("https://localhost:44351/api/productos/");
 
                     //HTTP POST
                     var postTask = client.PostAsJsonAsync("actualizarproducto", producto);
@@ -47,7 +47,7 @@ namespace WebBodega
             {
                 throw;
             }
-            return RedirectToAction("IndexProducto");
+            return RedirectToPage("IndexProducto");
         }
     }
 }

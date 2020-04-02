@@ -44,7 +44,7 @@ namespace Api.Controllers
         {
             try
             {
-                //oServicio.IdServicio = model.IdServicio;
+                oServicio.IdServicio = model.IdServicio;
                 oServicio.IdBodega = model.IdBodega;
                 oServicio.NombreServicio = model.NombreServicio;
                 oServicio.IdCliente = model.IdCliente;

@@ -1,20 +1,19 @@
 ﻿@page
 @model WebBodega.AgregarServicioModel
 
-    <script src="~/js/jquery-3.4.1.js"></script>
+<script src="~/js/jquery-3.4.1.js"></script>
 
 <h1>Agregar Servicio</h1>
 
 <div class="modal-body-trans">
-        @Html.HiddenFor(Model => Model.Servicio.IdServicio)
-    
+
     <form method="post">
         <div class="row">
             <div class="editor-label col-lg-3">
-                @Html.LabelFor(model => model.Servicio.NombreServicio)
+                @Html.Label("Nombre")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.TextBox("NombreServicio")
+                @Html.TextBoxFor(model => model.Servicio.NombreServicio)
             </div>
         </div>
 
@@ -24,7 +23,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.DropDownList("IdClientes")
-                @Html.TextBox("IdCliente")
+                @Html.HiddenFor(model => model.Servicio.IdCliente, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdCliente" })
             </div>
         </div>
 
@@ -34,7 +33,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.DropDownList("IdBodegas")
-                @Html.TextBox("IdBodega")
+                @Html.HiddenFor(model => model.Servicio.IdBodega, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdBodega" })
             </div>
         </div>
 
@@ -48,7 +47,7 @@
 </div>
 
 <script>
-    
+
     $("#IdClientes").change(function () {
         var idCliente = $('select[id=IdClientes]').val();
         $("#IdCliente").val(idCliente);
@@ -58,38 +57,5 @@
         var idCliente = $('select[id=IdBodegas]').val();
         $("#IdBodega").val(idCliente);
 	});
-
-    //function modeloServicio() {
-    //    var modelo =
-    //    {
-    //        NombreServicio: $('#NombreServicio').val(),
-    //        IdCliente: $('#IdCliente').val(),
-    //        IdBodega: $('#IdBodega').val(),
-    //    };
-    //    return modelo;
-    //}
-
-    //$("#btnGrabarServicio").click(function () {
-    //    debugger
-
-    //    var model = modeloServicio();
-    //    $.ajax({
-    //        type: "POST",
-    //        url: "AgregarServicio",//"/?handler=OnPost",
-    //        data: model,
-    //        headers: {
-    //            "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
-    //        },
-
-    //        //beforeSend: function (xhr) {
-    //        //    xhr.setRequestHeader("XSRF-TOKEN",
-    //        //        $('input:hidden[name="__RequestVerificationToken"]').val());
-    //        //},
-
-    //        //dataType: "json"
-    //    }).done(function (data) {
-    //        console.log(data.result);
-    //    });
-    //});
 
 </script>

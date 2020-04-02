@@ -32,7 +32,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.DropDownList("IdBodegas")
-                @Html.TextBox("IdBodega")
+                @Html.HiddenFor(model => model.Categoria.IdBodega, new { @class = "form-control input-sm", @maxlength = "80", @id="IdBodega"})
             </div>
         </div>
 
@@ -46,9 +46,10 @@
 </div>
 
 <script>
-$("#IdBodegas").change(function () {
-         debugger
+
+    $("#IdBodegas").change(function () {
         var idCategoria = $('select[id=IdBodegas]').val();
         $("#IdBodega").val(idCategoria);
     });
+
 </script>

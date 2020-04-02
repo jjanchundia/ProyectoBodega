@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -28,25 +29,22 @@ namespace WebBodega
 
         public ActionResult OnPost()
         {
-            var servicio = Servicio;
+            var producto = Servicio;
 
             try
             {
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri("https://localhost:44351/api/ServicioAlojamiento");
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("https://localhost:44351/api/servicioalojamiento");
 
-                    //HTTP POST
-                    var postTask = client.PostAsJsonAsync("servicioalojamiento", servicio);
-                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                    postTask.Wait();
-                }
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync("Servicioalojamiento", producto);
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                postTask.Wait();
             }
             catch (Exception)
             {
                 throw;
             }
-            
             return RedirectToPage("IndexServicio");
         }
     }
