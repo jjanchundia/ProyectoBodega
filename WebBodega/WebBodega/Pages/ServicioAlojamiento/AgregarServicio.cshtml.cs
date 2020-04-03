@@ -21,9 +21,9 @@ namespace WebBodega
         public async Task OnGetAsync()
         {
             var httpClient = new HttpClient();
-            var jsonBodega = await httpClient.GetStringAsync("https://localhost:44351/api/servicioalojamiento/consultarbodegas");
+            var jsonBodega = await httpClient.GetStringAsync("https://localhost:44351/api/bodegas/consultarbodegas");
             ViewData["IdBodegas"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonBodega);
-            var jsonCliente = await httpClient.GetStringAsync("https://localhost:44351/api/servicioalojamiento/consultarclientes");
+            var jsonCliente = await httpClient.GetStringAsync("https://localhost:44351/api/clientes/consultarclientes");
             ViewData["IdClientes"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCliente);
         }
 

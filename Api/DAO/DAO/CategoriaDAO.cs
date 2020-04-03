@@ -1,5 +1,6 @@
 ﻿using DAO.Datos;
 using Entidades;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -158,6 +159,22 @@ namespace DAO.DAO
             }
 
             return listaBodega;
+        }
+                
+        public List<SelectListItem> ListaCategoria()
+        {
+            using (var bd = new BodegaContext())
+            {
+                var categorias = (from categoria in bd.Categoria
+                                  select new SelectListItem
+                                  {
+                                      Text = categoria.Nombre,
+                                      Value = categoria.IdCategoria.ToString()
+                                  }).ToList();
+                categorias.Insert(0, new SelectListItem { Text = "--Seleccione--", Value = "" });
+                dynamic ViewBag = categorias;
+                return ViewBag;
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DAO.DAO
 {
@@ -130,6 +131,23 @@ namespace DAO.DAO
             }
 
             return listaClientes;
+        }
+                
+        public List<SelectListItem> ListaClientes()
+        {
+            using (var bd = new BodegaContext())
+            {
+                var bodegas = (from cliente in bd.Cliente
+                               where cliente.Estado == 1
+                               select new SelectListItem
+                               {
+                                   Text = cliente.Nombres + " " + cliente.Apellidos,
+                                   Value = cliente.IdCliente.ToString()
+                               }).ToList();
+                bodegas.Insert(0, new SelectListItem { Text = "--Seleccione--", Value = "" });
+                dynamic ViewBag = bodegas;
+                return ViewBag;
+            }
         }
     }
 }

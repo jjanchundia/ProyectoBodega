@@ -20,7 +20,7 @@ namespace WebBodega
         public async Task OnGetAsync()
         {
             var httpClient = new HttpClient();
-            var jsonBodega = await httpClient.GetStringAsync("https://localhost:44351/api/categorias/consultarbodegas");
+            var jsonBodega = await httpClient.GetStringAsync("https://localhost:44351/api/bodegas/consultarbodegas");
             ViewData["IdBodegas"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonBodega);
         }
 

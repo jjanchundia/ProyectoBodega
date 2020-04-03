@@ -21,19 +21,12 @@ namespace WebBodega
 
         }
 
-        public async Task<ActionResult> OnPostAsync()
+        public ActionResult OnPost()
         {
             var cliente = Cliente;
 
             try
             {
-                bool consulta = await ConsultarCliente(cliente.Cedula);
-
-                if (!consulta)
-                {
-                    throw new Exception();
-                }
-
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://localhost:44351/api/Clientes");
@@ -44,26 +37,12 @@ namespace WebBodega
                     postTask.Wait();
                 }
             }
-            catch (Exception)
+            catch (Exception)   
             {
                 throw;
             }
             
             return RedirectToPage("Index");
-        }
-
-        public async Task<bool> ConsultarCliente(string cedula)
-        {
-            var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync("http://localhost:44328/api/Clientes");
-            var clientes = JsonConvert.DeserializeObject<List<ClienteModel>>(json);
-
-            if (clientes.Any(x => x.Cedula == cedula))
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

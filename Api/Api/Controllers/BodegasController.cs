@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Api.Models;
 using DAO.DAO;
 using Entidades;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Api.Controllers
 {
@@ -17,18 +19,12 @@ namespace Api.Controllers
         [Route("actualizarbodega/")]
         public ActionResult ActualizarBodega(BodegaModel model)
         {
-            try
-            {
-                oBodega.IdBodega = model.IdBodega;
-                oBodega.Nombre = model.Nombre;
-                oBodega.Descripcion = model.Descripcion;
+            oBodega.IdBodega = model.IdBodega;
+            oBodega.Nombre = model.Nombre;
+            oBodega.Descripcion = model.Descripcion;
 
-                Bodega.ActualizarBodega(oBodega);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            Bodega.ActualizarBodega(oBodega);
+
             return Ok("Exito Actualizado");
         }
 
@@ -44,18 +40,12 @@ namespace Api.Controllers
         [HttpPost]
         public ActionResult GuardarBodega(BodegaModel model)
         {
-            try
-            {
-                oBodega.IdBodega = model.IdBodega;
-                oBodega.Nombre = model.Nombre;
-                oBodega.Descripcion = model.Descripcion;
+            oBodega.IdBodega = model.IdBodega;
+            oBodega.Nombre = model.Nombre;
+            oBodega.Descripcion = model.Descripcion;
 
-                Bodega.GuardarBodega(oBodega);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            Bodega.GuardarBodega(oBodega);
+
             return Ok("Exito");
         }
 
@@ -77,6 +67,14 @@ namespace Api.Controllers
         public ActionResult ConsultarBodegaPorNombres(string nombres)
         {
             return Ok(Bodega.ConsultarBodegaPorNombres(nombres));
+        }
+
+        [HttpGet]
+        [Route("consultarbodegas")]
+        public List<SelectListItem> ListaBodega()
+        {
+            List<SelectListItem>  listaBodegas = Bodega.ListaBodega();
+            return listaBodegas;            
         }
     }
 }

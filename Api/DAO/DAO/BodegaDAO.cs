@@ -2,8 +2,8 @@
 using Entidades;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DAO.DAO
 {
@@ -62,7 +62,7 @@ namespace DAO.DAO
                     bd.SaveChanges();
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -86,6 +86,22 @@ namespace DAO.DAO
 
             return listaBodegas;
         }
+        
+        public List<SelectListItem>ListaBodega()
+        {            
+            using (var bd = new BodegaContext())
+            {
+                var bodegas = (from bodega in bd.Bodegas
+                               select new SelectListItem
+                               {
+                                   Text = bodega.Nombre,
+                                   Value = bodega.IdBodega.ToString()
+                               }).ToList();
+                bodegas.Insert(0, new SelectListItem { Text = "--Seleccione--", Value = "" });
+                dynamic ViewBag = bodegas;
+                return ViewBag;
+            }
+        }
 
         public List<Bodega> ConsultarBodegaPorNombres(string nombre)
         {
@@ -102,7 +118,6 @@ namespace DAO.DAO
                                     Descripcion = bodega.Descripcion,
                                     Estado = (int)bodega.Estado
                                 }).ToList();
-
             }
 
             return listaBodegas;
@@ -122,7 +137,6 @@ namespace DAO.DAO
                                    Nombre = bodega.Nombre,
                                    Descripcion = bodega.Descripcion,
                                }).FirstOrDefault();
-
             }
 
             return listaBodega;

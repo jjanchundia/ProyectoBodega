@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Api.Models;
 using DAO.DAO;
 using Entidades;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Api.Controllers
 {
@@ -25,19 +22,13 @@ namespace Api.Controllers
         [Route("actualizarcliente/")]
         public ActionResult ActualizarCliente(ClienteModel model)
         {
-            try
-            {
-                oCliente.IdCliente = model.IdCliente;
-                oCliente.Nombres = model.Nombres;
-                oCliente.Apellidos = model.Apellidos;
-                oCliente.Cedula = model.Cedula;
+            oCliente.IdCliente = model.IdCliente;
+            oCliente.Nombres = model.Nombres;
+            oCliente.Apellidos = model.Apellidos;
+            oCliente.Cedula = model.Cedula;
 
-                cliente.ActualizarCliente(oCliente);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            cliente.ActualizarCliente(oCliente);
+
             return Ok("Exito Actualizado");
         }
 
@@ -52,18 +43,11 @@ namespace Api.Controllers
         [HttpPost]
         public ActionResult GuardarCliente(ClienteModel model)
         {
-            try
-            {
-                oCliente.Nombres = model.Nombres;
-                oCliente.Apellidos = model.Apellidos;
-                oCliente.Cedula = model.Cedula;
+            oCliente.Nombres = model.Nombres;
+            oCliente.Apellidos = model.Apellidos;
+            oCliente.Cedula = model.Cedula;
 
-                cliente.GuardarCliente(oCliente);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            cliente.GuardarCliente(oCliente);
             return Ok("Exito");
         }
 
@@ -79,6 +63,13 @@ namespace Api.Controllers
         public ActionResult ConsultarClientePorNombres(string nombres)
         {
             return Ok(cliente.ConsultarClientePorNombres(nombres));
+        }
+
+        [HttpGet]
+        [Route("consultarclientes")]
+        public List<SelectListItem> ListaClientes()
+        {
+            return cliente.ListaClientes();
         }
     }
 }

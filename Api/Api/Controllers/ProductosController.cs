@@ -23,20 +23,14 @@ namespace Api.Controllers
         [Route("actualizarproducto/")]
         public ActionResult ActualizarProducto(ProductoModel model)
         {
-            try
-            {
-                oProducto.IdProducto = model.IdProducto;
-                oProducto.IdCategoria = model.IdCategoria;
-                oProducto.Nombre = model.Nombre;
-                oProducto.Descripcion = model.Descripcion;
-                oProducto.FechaExpiracion = model.FechaExpiracion;
+            oProducto.IdProducto = model.IdProducto;
+            oProducto.IdCategoria = model.IdCategoria;
+            oProducto.Nombre = model.Nombre;
+            oProducto.Descripcion = model.Descripcion;
+            oProducto.FechaExpiracion = model.FechaExpiracion;
 
-                producto.ActualizarProducto(oProducto);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            producto.ActualizarProducto(oProducto);
+
             return Ok("Exito Actualizado");
         }
 
@@ -51,19 +45,13 @@ namespace Api.Controllers
         [HttpPost]
         public ActionResult GuardarProducto(ProductoModel model)
         {
-            try
-            {
-                oProducto.IdCategoria = model.IdCategoria;
-                oProducto.Nombre = model.Nombre;
-                oProducto.Descripcion = model.Descripcion;
-                oProducto.FechaExpiracion = model.FechaExpiracion;
+            oProducto.IdCategoria = model.IdCategoria;
+            oProducto.Nombre = model.Nombre;
+            oProducto.Descripcion = model.Descripcion;
+            oProducto.FechaExpiracion = model.FechaExpiracion;
 
-                producto.GuardarProducto(oProducto);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            producto.GuardarProducto(oProducto);
+         
             return Ok("Exito");
         }
 
@@ -85,24 +73,6 @@ namespace Api.Controllers
         public ActionResult ConsultarProductoPorNombres(string nombres)
         {
             return Ok(producto.ConsultarProductoPorNombres(nombres));
-        }
-
-        [HttpGet]
-        [Route("consultarcategorias")]
-        public List<SelectListItem> ListaCategoria()
-        {
-            using (var bd = new BodegaContext())
-            {
-                var categorias = (from categoria in bd.Categoria
-                                  select new SelectListItem
-                                  {
-                                      Text = categoria.Nombre,
-                                      Value = categoria.IdCategoria.ToString()
-                                  }).ToList();
-                categorias.Insert(0, new SelectListItem { Text = "--Seleccione--", Value = "" });
-                dynamic ViewBag = categorias;
-                return ViewBag;
-            }
-        }
+        }        
     }
 }
