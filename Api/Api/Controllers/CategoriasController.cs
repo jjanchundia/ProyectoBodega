@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Api.Models;
-using DAO.DAO;
-using DAO.Datos;
 using Entidades;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DAO.Services;
 
 namespace Api.Controllers
 {
@@ -16,60 +11,63 @@ namespace Api.Controllers
     [ApiController]
     public class CategoriasController : ControllerBase
     {
-        CategoriaDAO categoria = new CategoriaDAO();
-        Categorias oCategoria = new Categorias();
+        private readonly ICategoria _repo;
+        public CategoriasController(ICategoria repo)
+        {
+            _repo = repo;
+        }
+
+        private Categorias PrepareCategoria(CategoriaModel model)
+        {
+            var oCategoria = new Categorias();
+            oCategoria.IdBodega = model.IdBodega;
+            oCategoria.IdCategoria = model.IdCategoria;
+            oCategoria.Nombre = model.Nombre;
+            oCategoria.Descripcion = model.Descripcion;
+
+            return oCategoria;
+        }
 
         [HttpPost]
         [Route("actualizarcategoria/")]
         public ActionResult ActualizarCategoria(CategoriaModel model)
         {
-            oCategoria.IdCategoria = model.IdCategoria;
-            oCategoria.IdBodega = model.IdBodega;
-            oCategoria.Nombre = model.Nombre;
-            oCategoria.Descripcion = model.Descripcion;
-
-            categoria.ActualizarCategoria(oCategoria);
-
+            _repo.ActualizarCategoria(PrepareCategoria(model));
             return Ok("Exito Actualizado");
         }
 
         [HttpPost]
         public ActionResult Guardarcategoria(CategoriaModel model)
         {
-            oCategoria.IdBodega = model.IdBodega;
-            oCategoria.Nombre = model.Nombre;
-            oCategoria.Descripcion = model.Descripcion;
-
-            categoria.GuardarCategoria(oCategoria);
-
+            _repo.GuardarCategoria(PrepareCategoria(model));
             return Ok("Exito");
         }
 
         [HttpGet]
         public ActionResult Consultarcategorias()
         {
-            return Ok(categoria.ConsultarCategoria());
+            return Ok(_repo.ConsultarCategoria());
         }
 
         [HttpGet]
         [Route("consultarcategoriaporid/{idcategoria}")]
         public ActionResult ConsultarCategoriaPorId(int idcategoria)
         {
-            return Ok(categoria.ConsultarCategoriaPorId(idcategoria));
+            return Ok(_repo.ConsultarCategoriaPorId(idcategoria));
         }
 
         [HttpGet]
         [Route("consultarcategoriapornombres/{nombres}")]
         public ActionResult ConsultarCategoriaPorNombres(string nombres)
         {
-            return Ok(categoria.ConsultarCategoriaPorNombres(nombres));
+            return Ok(_repo.ConsultarCategoriaPorNombres(nombres));
         }
 
         [HttpGet]
         [Route("eliminarcategoria/{idCategoria}")]
         public ActionResult EliminarCatagoria(int idCategoria)
         {
-            categoria.EliminarCategoria(idCategoria);
+            _repo.EliminarCategoria(idCategoria);
             return Ok("Exito");
         }
 
@@ -77,7 +75,7 @@ namespace Api.Controllers
         [Route("consultarcategorias")]
         public List<SelectListItem> ListaCategorias()
         {
-            return categoria.ListaCategoria(); ;
+            return _repo.ListaCategoria(); ;
         }
     }
 }

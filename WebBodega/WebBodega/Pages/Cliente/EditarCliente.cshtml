@@ -2,18 +2,20 @@
 @model WebBodega.EditarClienteModel
 
 <h1>Editar Cliente</h1>
+<script src="~/js/jquery-3.4.1.js"></script>
 
 <div class="modal-body-trans">
     <form method="post">
-        
-        @Html.HiddenFor(Model => Model.Cliente.IdCliente)
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(Model => Model.Cliente.IdCliente, new { @id="IdCliente" })
 
         <div class="row">
             <div class="editor-label col-lg-3">
                 @Html.LabelFor(model => model.Cliente.Nombres, new { @class = "label-fenix-parametro" })
             </div>
             <div class="editor-field col-lg-6">
-                @Html.TextBoxFor(model => model.Cliente.Nombres, new { @class = "form-control input-sm", @maxlength = "80" })
+                @Html.TextBoxFor(model => model.Cliente.Nombres, new {@id="Nombres", @class = "form-control input-sm", @maxlength = "80" })
+                <span asp-validation-for="Cliente.Nombres" class="text-danger"></span>
             </div>
         </div>
 
@@ -22,17 +24,18 @@
                 @Html.LabelFor(model => model.Cliente.Apellidos, new { @class = "label-fenix-parametro" })
             </div>
             <div class="editor-field col-lg-6">
-                @Html.TextBoxFor(model => model.Cliente.Apellidos, new { @class = "form-control input-sm", @maxlength = "80" })
+                @Html.TextBoxFor(model => model.Cliente.Apellidos, new { @id = "Apellidos", @class = "form-control input-sm", @maxlength = "80" })
+                <span asp-validation-for="Cliente.Apellidos" class="text-danger"></span>
             </div>
         </div>
 
         <div class="row">
             <div class="editor-label col-lg-3">
                 @Html.LabelFor(model => model.Cliente.Cedula, new { @class = "label-fenix-parametro" })
-                @Html.ValidationMessage("ya existe")
             </div>
             <div class="editor-field col-lg-6">
-                @Html.TextBoxFor(model => model.Cliente.Cedula, new { @class = "form-control input-sm", @maxlength = "80" })
+                @Html.TextBoxFor(model => model.Cliente.Cedula, new { @id = "Cedula", @class = "form-control input-sm", @maxlength = "80" })
+                <span asp-validation-for="Cliente.Cedula" class="text-danger"></span>
             </div>
         </div>
 
@@ -40,7 +43,60 @@
             <button id="btnGrabarCliente" value="Grabar" class="btn btn-sm btn-success">
                 <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
             </button>
-            <a asp-page="/Cliente/Index" class="btn btn-sm btn-danger">Cerrar</a>
+            <button asp-page="/Cliente/Index" id="btnCerrarClientes" class="btn btn-sm btn-danger" data-dismiss="modal" aria-hidden="true">
+                <i class="glyphicon glyphicon-remove"></i> CerrarTodo
+            </button>
+            <a asp-page="/Cliente/Index" class="btn btn-sm btn-danger" id="btnCerrarCliente">Cerrar</a>
         </div>
     </form>
 </div>
+
+<script>
+        
+    //function modeloServicio() {
+    //    var modelo =
+    //    {
+    //        IdCliente: $('#IdCliente').val(),
+    //        Nombres: $('#Nombres').val(),
+    //        Apellidos: $('#Apellidos').val(),
+    //        Cedula: $('#Cedula').val(),
+    //    };
+    //    return modelo;
+    //}
+
+
+    //$("#btnGrabarCliente").click(function () {
+    //    debugger
+
+    //    var model = modeloServicio();
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/Cliente/EditarCliente",
+    //        data: model,
+    //        headers: {
+    //            "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
+    //        },
+            
+    //        complete: function () {
+    //            $("#btnCerrarCliente").click();
+    //        }
+    //    });
+    //    $("#btnCerrarCliente").click();
+    //});
+
+    $("#btnCerrarCliente").click(function () {
+        debugger
+
+        $.ajax({
+            type: "POST",
+            url: "/Cliente/Index",
+            headers: {
+                "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+            success: function () {
+                //alert("Cliente Editado");
+                //$("#btnCerrarClientes").click();
+            }
+        });
+    });
+</script>

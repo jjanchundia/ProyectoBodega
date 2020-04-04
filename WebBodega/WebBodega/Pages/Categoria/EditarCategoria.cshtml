@@ -16,6 +16,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.TextBoxFor(model => model.Categoria.Nombre, new { @class = "form-control input-sm", @maxlength = "80" })
+                <span asp-validation-for="Categoria.Nombre" class="text-danger"></span>
             </div>
         </div>
 
@@ -25,6 +26,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.TextBoxFor(model => model.Categoria.Descripcion, new { @class = "form-control input-sm", @maxlength = "80" })
+                <span asp-validation-for="Categoria.Descripcion" class="text-danger"></span>
             </div>
         </div>
 
@@ -35,6 +37,7 @@
             <div class="editor-field col-lg-6">
                 @Html.DropDownList("IdBodegas")
                 @Html.HiddenFor(model => model.Categoria.IdBodega, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdBodega" })
+                <span asp-validation-for="Categoria.IdBodega" class="text-danger"></span>
             </div>
         </div>
 

@@ -7,46 +7,51 @@
 
 <div class="modal-body-trans">
 
+    @Html.AntiForgeryToken()
+
     <form method="post">
-        <div class="row">
-            <div class="editor-label col-lg-3">
-                @Html.Label("Nombre")
-            </div>
-            <div class="editor-field col-lg-6">
-                @Html.TextBoxFor(model => model.Servicio.NombreServicio)
-            </div>
+    <div class="row">
+        <div class="editor-label col-lg-3">
+            @Html.Label("Nombre")
         </div>
+        <div class="editor-field col-lg-6">
+            @Html.TextBoxFor(model => model.Servicio.NombreServicio)
+            <span asp-validation-for="Servicio.NombreServicio" class="text-danger"></span>
+        </div>
+    </div>
 
-        <div class="row">
-            <div class="editor-label col-lg-3">
-                @Html.Label("Cliente")
-            </div>
-            <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdClientes")
-                @Html.HiddenFor(model => model.Servicio.IdCliente, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdCliente" })
-            </div>
+    <div class="row">
+        <div class="editor-label col-lg-3">
+            @Html.Label("Cliente")
         </div>
+        <div class="editor-field col-lg-6">
+            @Html.DropDownList("IdClientes")
+            @Html.HiddenFor(model => model.Servicio.IdCliente, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdCliente" })
+            <span asp-validation-for="Servicio.IdCliente" class="text-danger"></span>
+        </div>
+    </div>
 
-        <div class="row">
-            <div class="editor-label col-lg-3">
-                @Html.Label("Bodega")
-            </div>
-            <div class="editor-field col-lg-6">
-                @Html.DropDownList("IdBodegas")
-                @Html.HiddenFor(model => model.Servicio.IdBodega, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdBodega" })
-            </div>
+    <div class="row">
+        <div class="editor-label col-lg-3">
+            @Html.Label("Bodega")
         </div>
+        <div class="editor-field col-lg-6">
+            @Html.DropDownList("IdBodegas")
+            @Html.HiddenFor(model => model.Servicio.IdBodega, new { @class = "form-control input-sm", @maxlength = "80", @id = "IdBodega" })
+            <span asp-validation-for="Servicio.IdBodega" class="text-danger"></span>
+        </div>
+    </div>
 
-        <div class="modal-footer">
-            <button id="btnGrabarServicio" value="Grabar" class="btn btn-sm btn-success">
-                <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
-            </button>
-            <a asp-page="/ServicioAlojamiento/IndexServicio" class="btn btn-sm btn-danger">Cerrar</a>
-        </div>
+    <div class="modal-footer">
+        <button id="btnGrabarServicio" value="Grabar" class="btn btn-sm btn-success">
+            <i class="glyphicon glyphicon-floppy-disk"></i> Grabar
+        </button>
+        <a asp-page="/ServicioAlojamiento/IndexServicio" class="btn btn-sm btn-danger">Cerrar</a>
+    </div>
     </form>
 </div>
 
-<script>
+@*<script>
 
     $("#IdClientes").change(function () {
         var idCliente = $('select[id=IdClientes]').val();
@@ -56,6 +61,34 @@
     $("#IdBodegas").change(function () {
         var idCliente = $('select[id=IdBodegas]').val();
         $("#IdBodega").val(idCliente);
-	});
+    });
 
-</script>
+        
+    function modeloServicio() {
+        var modelo =
+        {
+            NombreServicio: $('#NombreServicio').val(),
+            IdCliente: $('#IdCliente').val(),
+            IdBodega: $('#IdBodega').val(),
+        };
+        return modelo;
+    }
+
+
+    $("#btnGrabarServicio").click(function () {
+        debugger
+
+        var model = modeloServicio();
+        $.ajax({
+            type: "POST",
+            url: "/ServicioAlojamiento/AgregarServicio",//?handler=Guardar",//"/?handler=OnPost",
+            data: model,
+            headers: {
+                "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
+            },
+        }).done(function (data) {
+            console.log(data.result);
+        });
+    });
+
+</script>*@

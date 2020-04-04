@@ -26,6 +26,12 @@ namespace WebBodega
         public ActionResult OnPost()
         {
             var model = Bodega;
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:44351/api/Bodegas/");

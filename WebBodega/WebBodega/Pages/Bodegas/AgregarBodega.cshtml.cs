@@ -24,6 +24,11 @@ namespace WebBodega
         {
             var bodega = Bodega;
 
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             try
             {
                 using (var client = new HttpClient())
@@ -40,6 +45,7 @@ namespace WebBodega
             {
                 throw;
             }
+
             return RedirectToPage("IndexBodega");
         }
     }

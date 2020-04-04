@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Api.Models;
-using DAO.DAO;
-using DAO.Datos;
+﻿using Api.Models;
 using Entidades;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using DAO.Services;
 
 namespace Api.Controllers
 {
@@ -16,21 +9,29 @@ namespace Api.Controllers
     [ApiController]
     public class ProductosController : ControllerBase
     {
-        ProductoDAO producto = new ProductoDAO();
-        Productos oProducto = new Productos();
+        private readonly IProducto _repo;
+        public ProductosController(IProducto repo)
+        {
+            _repo = repo;
+        }
+
+        private Productos PrepareProducto(ProductoModel model)
+        {
+            var producto = new Productos();
+            producto.IdProducto = model.IdProducto;
+            producto.IdCategoria = model.IdCategoria;
+            producto.Nombre = model.Nombre;
+            producto.Descripcion = model.Descripcion;
+            producto.FechaExpiracion = model.FechaExpiracion;
+
+            return producto;
+        }
 
         [HttpPost]
         [Route("actualizarproducto/")]
         public ActionResult ActualizarProducto(ProductoModel model)
         {
-            oProducto.IdProducto = model.IdProducto;
-            oProducto.IdCategoria = model.IdCategoria;
-            oProducto.Nombre = model.Nombre;
-            oProducto.Descripcion = model.Descripcion;
-            oProducto.FechaExpiracion = model.FechaExpiracion;
-
-            producto.ActualizarProducto(oProducto);
-
+            _repo.ActualizarProducto(PrepareProducto(model));
             return Ok("Exito Actualizado");
         }
 
@@ -38,41 +39,35 @@ namespace Api.Controllers
         [Route("eliminarproductos/{idProducto}")]
         public ActionResult EliminarBodega(int idProducto)
         {
-            producto.EliminarProducto(idProducto);
+            _repo.EliminarProducto(idProducto);
             return Ok();
         }
 
         [HttpPost]
         public ActionResult GuardarProducto(ProductoModel model)
         {
-            oProducto.IdCategoria = model.IdCategoria;
-            oProducto.Nombre = model.Nombre;
-            oProducto.Descripcion = model.Descripcion;
-            oProducto.FechaExpiracion = model.FechaExpiracion;
-
-            producto.GuardarProducto(oProducto);
-         
+            _repo.GuardarProducto(PrepareProducto(model));         
             return Ok("Exito");
         }
 
         [HttpGet]
         public ActionResult ConsultarProductos()
         {
-            return Ok(producto.ConsultarProductos());
+            return Ok(_repo.ConsultarProductos());
         }
 
         [HttpGet]
         [Route("consultarproductoporid/{idProducto}")]
         public ActionResult ConsultarProductoPorId(int idProducto)
         {
-            return Ok(producto.ConsultarProductosPorId(idProducto));
+            return Ok(_repo.ConsultarProductosPorId(idProducto));
         }
 
         [HttpGet]
         [Route("consultarproductopornombres/{nombres}")]
         public ActionResult ConsultarProductoPorNombres(string nombres)
         {
-            return Ok(producto.ConsultarProductoPorNombres(nombres));
+            return Ok(_repo.ConsultarProductoPorNombres(nombres));
         }        
     }
 }

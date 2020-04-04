@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Api.Models;
-using DAO.DAO;
 using Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DAO.Services;
 
 namespace Api.Controllers
 {
@@ -12,19 +11,27 @@ namespace Api.Controllers
     [ApiController]
     public class BodegasController : ControllerBase
     {
-        BodegaDAO Bodega = new BodegaDAO();
-        Bodega oBodega = new Bodega();
+        private readonly IBodega _repo;
+        public BodegasController(IBodega repo)
+        {
+            _repo = repo;
+        }
+     
+        private Bodega PrepareBodega(BodegaModel model)
+        {
+            var oBodega = new Bodega();
+            oBodega.IdBodega = model.IdBodega;
+            oBodega.Nombre = model.Nombre;
+            oBodega.Descripcion = model.Descripcion;
+
+            return oBodega;
+        }
 
         [HttpPost]
         [Route("actualizarbodega/")]
         public ActionResult ActualizarBodega(BodegaModel model)
         {
-            oBodega.IdBodega = model.IdBodega;
-            oBodega.Nombre = model.Nombre;
-            oBodega.Descripcion = model.Descripcion;
-
-            Bodega.ActualizarBodega(oBodega);
-
+            _repo.ActualizarBodega(PrepareBodega(model));
             return Ok("Exito Actualizado");
         }
 
@@ -32,7 +39,7 @@ namespace Api.Controllers
         [Route("eliminarbodegas/{idBodega}")]
         public ActionResult EliminarBodega(int idBodega)
         {
-            Bodega.EliminarBodega(idBodega);
+            _repo.EliminarBodega(idBodega);
             return Ok();
         }
 
@@ -40,40 +47,35 @@ namespace Api.Controllers
         [HttpPost]
         public ActionResult GuardarBodega(BodegaModel model)
         {
-            oBodega.IdBodega = model.IdBodega;
-            oBodega.Nombre = model.Nombre;
-            oBodega.Descripcion = model.Descripcion;
-
-            Bodega.GuardarBodega(oBodega);
-
+            _repo.GuardarBodega(PrepareBodega(model));
             return Ok("Exito");
         }
 
         [HttpGet]
         public ActionResult ConsultarBodegas()
         {
-            return Ok(Bodega.ConsultarBodegas());
+            return Ok(_repo.ConsultarBodegas());
         }
 
         [HttpGet]
         [Route("consultarbodegaporid/{idBodega}")]
         public ActionResult ConsultarBodegaPorId(int idBodega)
         {
-            return Ok(Bodega.ConsultarBodegaPorId(idBodega));
+            return Ok(_repo.ConsultarBodegaPorId(idBodega));
         }
 
         [HttpGet]
         [Route("consultarbodegapornombres/{nombres}")]
         public ActionResult ConsultarBodegaPorNombres(string nombres)
         {
-            return Ok(Bodega.ConsultarBodegaPorNombres(nombres));
+            return Ok(_repo.ConsultarBodegaPorNombres(nombres));
         }
 
         [HttpGet]
         [Route("consultarbodegas")]
         public List<SelectListItem> ListaBodega()
         {
-            List<SelectListItem>  listaBodegas = Bodega.ListaBodega();
+            List<SelectListItem>  listaBodegas = _repo.ListaBodega();
             return listaBodegas;            
         }
     }

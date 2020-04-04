@@ -4,25 +4,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DAO.Services;
 
 namespace DAO.DAO
 {
-    public class BodegaDAO
+    public class BodegaDAO : IBodega
     {
+        protected readonly BodegaContext _context;
+        public BodegaDAO(BodegaContext context)
+        {
+            _context = context;
+        }
+
         public void GuardarBodega(Bodega model)
         {
             try
             {
-                using (BodegaContext bd = new BodegaContext())
-                {
-                    var bodega = new Bodegas();
-                    bodega.Nombre = model.Nombre;
-                    bodega.Descripcion = model.Descripcion;
-                    bodega.Estado = 1;
+                var bodega = new Bodegas();
 
-                    bd.Bodegas.Add(bodega);
-                    bd.SaveChanges();
-                }
+                bodega.Nombre = model.Nombre;
+                bodega.Descripcion = model.Descripcion;
+                bodega.Estado = 1;
+
+                _context.Bodegas.Add(bodega);
+                _context.SaveChanges();
+
             }
             catch (System.Exception e)
             {
@@ -34,16 +40,14 @@ namespace DAO.DAO
         {
             try
             {
-                using (BodegaContext bd = new BodegaContext())
-                {
-                    Bodegas bodega = bd.Bodegas.Where(i => i.IdBodega == model.IdBodega).FirstOrDefault();
-                    bodega.Nombre = model.Nombre;
-                    bodega.Descripcion = model.Descripcion;
+                Bodegas bodega = _context.Bodegas.Where(i => i.IdBodega == model.IdBodega).FirstOrDefault();
+                bodega.Nombre = model.Nombre;
+                bodega.Descripcion = model.Descripcion;
 
-                    bd.SaveChanges();
-                }
+                _context.SaveChanges();
+
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -54,13 +58,11 @@ namespace DAO.DAO
         {
             try
             {
-                using (BodegaContext bd = new BodegaContext())
-                {
-                    Bodegas bodega = bd.Bodegas.Where(i => i.IdBodega == idBodega).FirstOrDefault();
-                    bodega.Estado = 0;
+                Bodegas bodega = _context.Bodegas.Where(i => i.IdBodega == idBodega).FirstOrDefault();
+                bodega.Estado = 0;
 
-                    bd.SaveChanges();
-                }
+                _context.SaveChanges();
+
             }
             catch (Exception e)
             {
@@ -70,65 +72,58 @@ namespace DAO.DAO
         public List<Bodega> ConsultarBodegas()
         {
             List<Bodega> listaBodegas = null;
-            using (var bd = new BodegaContext())
-            {
-                listaBodegas = (from bodega in bd.Bodegas
-                                where bodega.Estado == 1
-                                select new Bodega
-                                {
-                                    IdBodega = bodega.IdBodega,
-                                    Nombre = bodega.Nombre,
-                                    Descripcion = bodega.Descripcion,
-                                    Estado = (int)bodega.Estado
-                                }).ToList();
 
-            }
+            listaBodegas = (from bodega in _context.Bodegas
+                            where bodega.Estado == 1
+                            select new Bodega
+                            {
+                                IdBodega = bodega.IdBodega,
+                                Nombre = bodega.Nombre,
+                                Descripcion = bodega.Descripcion,
+                                Estado = (int)bodega.Estado
+                            }).ToList();
 
             return listaBodegas;
         }
-        
-        public List<SelectListItem>ListaBodega()
-        {            
-            using (var bd = new BodegaContext())
-            {
-                var bodegas = (from bodega in bd.Bodegas
-                               select new SelectListItem
-                               {
-                                   Text = bodega.Nombre,
-                                   Value = bodega.IdBodega.ToString()
-                               }).ToList();
-                bodegas.Insert(0, new SelectListItem { Text = "--Seleccione--", Value = "" });
-                dynamic ViewBag = bodegas;
-                return ViewBag;
-            }
+
+        public List<SelectListItem> ListaBodega()
+        {
+            var bodegas = (from bodega in _context.Bodegas
+                           where bodega.Estado == 1
+                           select new SelectListItem
+                           {
+                               Text = bodega.Nombre,
+                               Value = bodega.IdBodega.ToString()
+                           }).ToList();
+            bodegas.Insert(0, new SelectListItem { Text = "--Seleccione--", Value = "" });
+            dynamic ViewBag = bodegas;
+            return ViewBag;
+
         }
 
         public List<Bodega> ConsultarBodegaPorNombres(string nombre)
         {
             List<Bodega> listaBodegas = null;
-            using (var bd = new BodegaContext())
-            {
-                listaBodegas = (from bodega in bd.Bodegas
-                                where bodega.Nombre.Contains(nombre)
-                                && bodega.Estado == 1
-                                select new Bodega
-                                {
-                                    IdBodega = bodega.IdBodega,
-                                    Nombre = bodega.Nombre,
-                                    Descripcion = bodega.Descripcion,
-                                    Estado = (int)bodega.Estado
-                                }).ToList();
-            }
 
+            listaBodegas = (from bodega in _context.Bodegas
+                            where bodega.Nombre.Contains(nombre)
+                            && bodega.Estado == 1
+                            select new Bodega
+                            {
+                                IdBodega = bodega.IdBodega,
+                                Nombre = bodega.Nombre,
+                                Descripcion = bodega.Descripcion,
+                                Estado = (int)bodega.Estado
+                            }).ToList();
+         
             return listaBodegas;
         }
 
         public Bodega ConsultarBodegaPorId(int idBodega)
         {
             Bodega listaBodega = null;
-            using (var bd = new BodegaContext())
-            {
-                listaBodega = (from bodega in bd.Bodegas
+            
+                listaBodega = (from bodega in _context.Bodegas
                                where bodega.IdBodega == idBodega
                                && bodega.Estado == 1
                                select new Bodega
@@ -137,7 +132,6 @@ namespace DAO.DAO
                                    Nombre = bodega.Nombre,
                                    Descripcion = bodega.Descripcion,
                                }).FirstOrDefault();
-            }
 
             return listaBodega;
         }

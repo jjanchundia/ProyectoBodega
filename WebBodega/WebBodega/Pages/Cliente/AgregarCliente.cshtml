@@ -16,6 +16,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.TextBoxFor(model => model.Cliente.Nombres, new { @class = "form-control input-sm", @maxlength = "80" })
+                <span asp-validation-for="Cliente.Nombres" class="text-danger"></span>
             </div>
         </div>
 
@@ -25,6 +26,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.TextBoxFor(model => model.Cliente.Apellidos, new { @class = "form-control input-sm", @maxlength = "80" })
+                <span asp-validation-for="Cliente.Apellidos" class="text-danger"></span>
             </div>
         </div>
 
@@ -34,6 +36,7 @@
             </div>
             <div class="editor-field col-lg-6">
                 @Html.TextBoxFor(model => model.Cliente.Cedula, new { @class = "form-control input-sm", @maxlength = "80" })
+                <span asp-validation-for="Cliente.Cedula" class="text-danger"></span>
             </div>
         </div>
 

@@ -30,7 +30,7 @@ namespace WebBodega
         public async Task OnPostReporte()
         {
             var model = Servicio;
-            int idCliente = model.IdCliente;
+            int idCliente = (int)model.IdCliente;
             var httpClient = new HttpClient();
             var json = await httpClient.GetStringAsync($"https://localhost:44351/api/servicioalojamiento/reporte/{idCliente}");
             Producto = JsonConvert.DeserializeObject<List<ProductoModel>>(json);

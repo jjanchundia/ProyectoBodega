@@ -9,8 +9,11 @@ namespace WebBodega.Models
     public class ProductoModel
     {
         public int IdProducto { get; set; }
-        public int IdCategoria { get; set; }
+        [Required(ErrorMessage = "Seleccione Categoria:")]
+        public int? IdCategoria { get; set; }
+        [Required(ErrorMessage = "Ingrese Nombre:")]
         public string Nombre { get; set; }
+        [Required(ErrorMessage = "Ingrese Descripción:")]
         public string Descripcion { get; set; }
         public string NombreCategoria { get; set; }
         //control fecha
@@ -18,7 +21,8 @@ namespace WebBodega.Models
         //Para q nos permita registrar el formato de la fecha para no tener problemas al insertar
         [DisplayFormat(DataFormatString = "{0:yyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha Expiración")]
-        public DateTime FechaExpiracion { get; set; }
+        [Required(ErrorMessage = "Ingrese Fecha:")]
+        public DateTime? FechaExpiracion { get; set; }
         public int Estado { get; set; }
     }
 }

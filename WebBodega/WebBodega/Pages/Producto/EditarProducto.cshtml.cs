@@ -27,9 +27,17 @@ namespace WebBodega
             Producto = JsonConvert.DeserializeObject<ProductoModel>(json);
         }
 
-        public ActionResult OnPost()
+        public async Task<ActionResult> OnPostAsync()
         {
             var producto = Producto;
+
+            if (!ModelState.IsValid)
+            {
+                var httpClient = new HttpClient();
+                string jsonCategoria = await httpClient.GetStringAsync("https://localhost:44351/api/categorias/consultarcategorias");
+                ViewData["IdCategorias"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCategoria);
+                return Page();
+            }
 
             try
             {
@@ -47,6 +55,7 @@ namespace WebBodega
             {
                 throw;
             }
+
             return RedirectToPage("IndexProducto");
         }
     }

@@ -27,9 +27,19 @@ namespace WebBodega
             ViewData["IdClientes"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCliente);
         }
 
-        public ActionResult OnPost()
+        public async Task<ActionResult> OnPostAsync()
         {
             var producto = Servicio;
+
+            if (!ModelState.IsValid)
+            {
+                var httpClient = new HttpClient();
+                var jsonBodega = await httpClient.GetStringAsync("https://localhost:44351/api/bodegas/consultarbodegas");
+                ViewData["IdBodegas"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonBodega);
+                string jsonCliente = await httpClient.GetStringAsync("https://localhost:44351/api/clientes/consultarclientes");
+                ViewData["IdClientes"] = JsonConvert.DeserializeObject<List<SelectListItem>>(jsonCliente);
+                return Page();
+            }
 
             try
             {
@@ -45,6 +55,7 @@ namespace WebBodega
             {
                 throw;
             }
+
             return RedirectToPage("IndexServicio");
         }
     }

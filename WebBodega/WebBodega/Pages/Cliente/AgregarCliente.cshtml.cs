@@ -25,6 +25,11 @@ namespace WebBodega
         {
             var cliente = Cliente;
 
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             try
             {
                 using (var client = new HttpClient())

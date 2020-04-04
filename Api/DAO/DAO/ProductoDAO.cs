@@ -3,29 +3,34 @@ using Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DAO.Services;
 
 namespace DAO.DAO
 {
-    public class ProductoDAO
+    public class ProductoDAO:IProducto
     {
+        protected readonly BodegaContext _context;
+        public ProductoDAO(BodegaContext context)
+        {
+            _context = context;
+        }
+
         public void GuardarProducto(Productos model)
         {
             try
             {
-                using (BodegaContext bd = new BodegaContext())
-                {
-                    Producto producto = new Producto();
-                    producto.IdCategoria = model.IdCategoria;
-                    producto.Nombre = model.Nombre;
-                    producto.Descripcion = model.Descripcion;
-                    producto.FechaExpiracion = model.FechaExpiracion;
-                    producto.Estado = 1;
+                Producto producto = new Producto();
 
-                    bd.Producto.Add(producto);
-                    bd.SaveChanges();
-                }
+                producto.IdCategoria = model.IdCategoria;
+                producto.Nombre = model.Nombre;
+                producto.Descripcion = model.Descripcion;
+                producto.FechaExpiracion = model.FechaExpiracion;
+                producto.Estado = 1;
+
+                _context.Producto.Add(producto);
+                _context.SaveChanges();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -35,18 +40,15 @@ namespace DAO.DAO
         {
             try
             {
-                using (BodegaContext bd = new BodegaContext())
-                {
-                    Producto producto = bd.Producto.Where(i => i.IdProducto == model.IdProducto).FirstOrDefault();
-                    producto.IdCategoria = model.IdCategoria;
-                    producto.Nombre = model.Nombre;
-                    producto.Descripcion = model.Descripcion;
-                    producto.FechaExpiracion = model.FechaExpiracion;
+                Producto producto = _context.Producto.Where(i => i.IdProducto == model.IdProducto).FirstOrDefault();
+                producto.IdCategoria = model.IdCategoria;
+                producto.Nombre = model.Nombre;
+                producto.Descripcion = model.Descripcion;
+                producto.FechaExpiracion = model.FechaExpiracion;
 
-                    bd.SaveChanges();
-                }
+                _context.SaveChanges();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -56,15 +58,12 @@ namespace DAO.DAO
         {
             try
             {
-                using (BodegaContext bd = new BodegaContext())
-                {
-                    Producto producto = bd.Producto.Where(i => i.IdProducto == idProducto).FirstOrDefault();
-                    producto.Estado = 0;
+                Producto producto = _context.Producto.Where(i => i.IdProducto == idProducto).FirstOrDefault();
+                producto.Estado = 0;
 
-                    bd.SaveChanges();
-                }
+                _context.SaveChanges();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -73,24 +72,21 @@ namespace DAO.DAO
         public List<Productos> ConsultarProductos()
         {
             List<Productos> listaProductos = null;
-            using (var bd = new BodegaContext())
-            {
-                listaProductos = (from producto in bd.Producto
-                                  join categoria in bd.Categoria
-                                  on producto.IdCategoria equals categoria.IdCategoria
-                                  orderby categoria.IdCategoria
-                                  where producto.Estado == 1
-                                  select new Productos
-                                  {
-                                      IdProducto = (int)producto.IdProducto,
-                                      IdCategoria = (int)producto.IdCategoria,
-                                      Nombre = producto.Nombre,
-                                      Descripcion = producto.Descripcion,
-                                      FechaExpiracion = (DateTime)producto.FechaExpiracion,
-                                      NombreCategoria = categoria.Nombre
-                                  }).ToList();
 
-            }
+            listaProductos = (from producto in _context.Producto
+                              join categoria in _context.Categoria
+                              on producto.IdCategoria equals categoria.IdCategoria
+                              orderby categoria.IdCategoria
+                              where producto.Estado == 1
+                              select new Productos
+                              {
+                                  IdProducto = (int)producto.IdProducto,
+                                  IdCategoria = (int)producto.IdCategoria,
+                                  Nombre = producto.Nombre,
+                                  Descripcion = producto.Descripcion,
+                                  FechaExpiracion = (DateTime)producto.FechaExpiracion,
+                                  NombreCategoria = categoria.Nombre
+                              }).ToList();
 
             return listaProductos;
         }
@@ -98,23 +94,20 @@ namespace DAO.DAO
         public List<Productos> ConsultarProductoPorNombres(string nombres)
         {
             List<Productos> listaProductos = null;
-            using (var bd = new BodegaContext())
-            {
-                listaProductos = (from producto in bd.Producto
-                                  join categoria in bd.Categoria
-                                  on producto.IdCategoria equals categoria.IdCategoria
-                                  where producto.Nombre.Contains(nombres)
-                                  select new Productos
-                                  {
-                                      IdProducto = (int)producto.IdProducto,
-                                      IdCategoria = (int)producto.IdCategoria,
-                                      Nombre = producto.Nombre,
-                                      Descripcion = producto.Descripcion,
-                                      FechaExpiracion = (DateTime)producto.FechaExpiracion,
-                                      NombreCategoria = categoria.Nombre
-                                  }).ToList();
 
-            }
+            listaProductos = (from producto in _context.Producto
+                              join categoria in _context.Categoria
+                              on producto.IdCategoria equals categoria.IdCategoria
+                              where producto.Nombre.Contains(nombres)
+                              select new Productos
+                              {
+                                  IdProducto = (int)producto.IdProducto,
+                                  IdCategoria = (int)producto.IdCategoria,
+                                  Nombre = producto.Nombre,
+                                  Descripcion = producto.Descripcion,
+                                  FechaExpiracion = (DateTime)producto.FechaExpiracion,
+                                  NombreCategoria = categoria.Nombre
+                              }).ToList();
 
             return listaProductos;
         }
@@ -122,22 +115,20 @@ namespace DAO.DAO
         public Productos ConsultarProductosPorId(int idProducto)
         {
             Productos listaProductos = null;
-            using (var bd = new BodegaContext())
-            {
-                listaProductos = (from producto in bd.Producto
-                                  join categoria in bd.Categoria
-                                  on producto.IdCategoria equals categoria.IdCategoria
-                                  where producto.IdProducto == idProducto
-                                  select new Productos
-                                  {
-                                      IdProducto = (int)producto.IdProducto,
-                                      IdCategoria = (int)producto.IdCategoria,
-                                      Nombre = producto.Nombre,
-                                      Descripcion = producto.Descripcion,
-                                      FechaExpiracion = (DateTime)producto.FechaExpiracion,
-                                      NombreCategoria = categoria.Nombre
-                                  }).FirstOrDefault();
-            }
+
+            listaProductos = (from producto in _context.Producto
+                              join categoria in _context.Categoria
+                              on producto.IdCategoria equals categoria.IdCategoria
+                              where producto.IdProducto == idProducto
+                              select new Productos
+                              {
+                                  IdProducto = (int)producto.IdProducto,
+                                  IdCategoria = (int)producto.IdCategoria,
+                                  Nombre = producto.Nombre,
+                                  Descripcion = producto.Descripcion,
+                                  FechaExpiracion = (DateTime)producto.FechaExpiracion,
+                                  NombreCategoria = categoria.Nombre
+                              }).FirstOrDefault();
 
             return listaProductos;
         }

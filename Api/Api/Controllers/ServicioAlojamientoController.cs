@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Api.Models;
-using DAO.DAO;
-using DAO.Datos;
+﻿using Api.Models;
 using Entidades;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using DAO.Services;
 
 namespace Api.Controllers
 {
@@ -16,69 +9,63 @@ namespace Api.Controllers
     [ApiController]
     public class ServicioAlojamientoController : ControllerBase
     {
-        ServicioDAO servicio = new ServicioDAO();
-        Servicio oServicio = new Servicio();
+        private readonly IServicio _repo;
+        public ServicioAlojamientoController(IServicio repo)
+        {
+            _repo = repo;
+        }
+
+        private Servicio PrepareProducto(ServiciosModel model)
+        {
+            var servicio = new Servicio();
+            servicio.IdServicio = model.IdServicio;
+            servicio.NombreServicio = model.NombreServicio;
+            servicio.IdCliente = model.IdCliente;
+            servicio.IdBodega = model.IdBodega;
+
+            return servicio;
+        }
 
         [HttpPost]
         [Route("actualizarservicio/")]
         public ActionResult ActualizarServicio(ServiciosModel model)
         {
-            oServicio.IdServicio = model.IdServicio;
-            oServicio.NombreServicio = model.NombreServicio;
-            oServicio.IdCliente = model.IdCliente;
-            oServicio.IdBodega = model.IdBodega;
-
-            servicio.ActualizarServicio(oServicio);
-
+            _repo.ActualizarServicio(PrepareProducto(model));
             return Ok("Exito Actualizado");
         }
 
         [HttpPost]
         public ActionResult Guardarservicio(ServiciosModel model)
         {
-            oServicio.IdServicio = model.IdServicio;
-            oServicio.IdBodega = model.IdBodega;
-            oServicio.NombreServicio = model.NombreServicio;
-            oServicio.IdCliente = model.IdCliente;
-
-            servicio.GuardarServicio(oServicio);
-
+            _repo.GuardarServicio(PrepareProducto(model));
             return Ok("Exito");
         }
 
         [HttpGet]
         public ActionResult Consultarservicios()
         {
-            return Ok(servicio.ConsultarServicios());
+            return Ok(_repo.ConsultarServicios());
         }
 
         [HttpGet]
         [Route("consultarservicioporid/{idservicio}")]
         public ActionResult ConsultarservicioPorId(int idservicio)
         {
-            return Ok(servicio.ConsultarServiciosPorId(idservicio));
+            return Ok(_repo.ConsultarServiciosPorId(idservicio));
         }
 
         [HttpGet]
         [Route("consultarserviciopornombres/{nombres}")]
         public ActionResult ConsultarservicioPorNombres(string nombres)
         {
-            return Ok(servicio.ConsultarServicioPorNombres(nombres));
+            return Ok(_repo.ConsultarServicioPorNombres(nombres));
         }
-
-        [HttpPost]
-        [Route("eliminarservicio/{idservicio}")]
-        public ActionResult EliminarServicio(int idservicio)
-        {
-            servicio.EliminarServicio(idservicio);
-            return Ok("Exito");
-        }
-       
+               
         [HttpGet]
         [Route("reporte/{idCliente}")]
         public ActionResult ConsultarReporte(int idCliente)
         {
-            return Ok(servicio.ConsultarProductos(idCliente));
+            return Ok(_repo.ConsultarProductos(idCliente));
         }
     }
 }

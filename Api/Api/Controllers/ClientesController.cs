@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Api.Models;
-using DAO.DAO;
+using DAO.Services;
 using Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,24 +11,32 @@ namespace Api.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
-        ClienteDAO cliente = new ClienteDAO();
-        Clientes oCliente = new Clientes();
-        public ActionResult ConsultarClientes()
+        private readonly ICliente _repo;
+        public ClientesController(ICliente repo)
         {
-            return Ok(cliente.ConsultarClientes());
+            _repo = repo;
         }
-
-        [HttpPost]
-        [Route("actualizarcliente/")]
-        public ActionResult ActualizarCliente(ClienteModel model)
+        
+        private Clientes PrepareCliente(ClienteModel model)
         {
+            var oCliente = new Clientes();
             oCliente.IdCliente = model.IdCliente;
             oCliente.Nombres = model.Nombres;
             oCliente.Apellidos = model.Apellidos;
             oCliente.Cedula = model.Cedula;
 
-            cliente.ActualizarCliente(oCliente);
+            return oCliente;
+        }
+        public ActionResult ConsultarClientes()
+        {
+            return Ok(_repo.ConsultarClientes());
+        }
 
+        [HttpPost]
+        [Route("actualizarcliente/")]
+        public ActionResult ActualizarCliente(ClienteModel model)
+        {            
+            _repo.ActualizarCliente(PrepareCliente(model));
             return Ok("Exito Actualizado");
         }
 
@@ -36,18 +44,14 @@ namespace Api.Controllers
         [Route("eliminarcliente/{idCliente}")]
         public ActionResult EliminarCliente(int idCliente)
         {
-            cliente.EliminarCliente(idCliente);
+            _repo.EliminarCliente(idCliente);
             return Ok();
         }
 
         [HttpPost]
         public ActionResult GuardarCliente(ClienteModel model)
         {
-            oCliente.Nombres = model.Nombres;
-            oCliente.Apellidos = model.Apellidos;
-            oCliente.Cedula = model.Cedula;
-
-            cliente.GuardarCliente(oCliente);
+            _repo.GuardarCliente(PrepareCliente(model));
             return Ok("Exito");
         }
 
@@ -55,21 +59,21 @@ namespace Api.Controllers
         [Route("consultarclienteporid/{idCliente}")]
         public ActionResult ConsultarClientePorId(int idCliente)
         {
-            return Ok(cliente.ConsultarClientePorId(idCliente));
+            return Ok(_repo.ConsultarClientePorId(idCliente));
         }
 
         [HttpGet]
         [Route("consultarclientepornombres/{nombres}")]
         public ActionResult ConsultarClientePorNombres(string nombres)
         {
-            return Ok(cliente.ConsultarClientePorNombres(nombres));
+            return Ok(_repo.ConsultarClientePorNombres(nombres));
         }
 
         [HttpGet]
         [Route("consultarclientes")]
         public List<SelectListItem> ListaClientes()
         {
-            return cliente.ListaClientes();
+            return _repo.ListaClientes();
         }
     }
 }
