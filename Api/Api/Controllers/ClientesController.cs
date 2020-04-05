@@ -37,7 +37,7 @@ namespace Api.Controllers
         public ActionResult ActualizarCliente(ClienteModel model)
         {            
             _repo.ActualizarCliente(PrepareCliente(model));
-            return Ok("Exito Actualizado");
+            return Ok();
         }
 
         [HttpGet]
@@ -52,7 +52,7 @@ namespace Api.Controllers
         public ActionResult GuardarCliente(ClienteModel model)
         {
             _repo.GuardarCliente(PrepareCliente(model));
-            return Ok("Exito");
+            return Ok();
         }
 
         [HttpGet]

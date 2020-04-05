@@ -32,7 +32,7 @@ namespace Api.Controllers
         public ActionResult ActualizarProducto(ProductoModel model)
         {
             _repo.ActualizarProducto(PrepareProducto(model));
-            return Ok("Exito Actualizado");
+            return Ok();
         }
 
         [HttpGet]
@@ -47,7 +47,7 @@ namespace Api.Controllers
         public ActionResult GuardarProducto(ProductoModel model)
         {
             _repo.GuardarProducto(PrepareProducto(model));         
-            return Ok("Exito");
+            return Ok();
         }
 
         [HttpGet]

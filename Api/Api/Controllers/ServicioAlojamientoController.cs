@@ -1,7 +1,7 @@
-﻿using Api.Models;
-using Entidades;
+﻿using Entidades;
 using Microsoft.AspNetCore.Mvc;
 using DAO.Services;
+using Api.Models;
 
 namespace Api.Controllers
 {
@@ -31,14 +31,15 @@ namespace Api.Controllers
         public ActionResult ActualizarServicio(ServiciosModel model)
         {
             _repo.ActualizarServicio(PrepareProducto(model));
-            return Ok("Exito Actualizado");
+            return Ok();
         }
 
         [HttpPost]
-        public ActionResult Guardarservicio(ServiciosModel model)
+        //aveces es bueno ser especifico asi que ponemos la atiqueta from body para que entienda que queremos el resultado del body 
+        public IActionResult Guardarservicio([FromBody]ServiciosModel model)
         {
             _repo.GuardarServicio(PrepareProducto(model));
-            return Ok("Exito");
+            return Ok();
         }
 
         [HttpGet]
@@ -46,24 +47,10 @@ namespace Api.Controllers
         {
             return Ok(_repo.ConsultarServicios());
         }
-
-        [HttpGet]
-        [Route("consultarservicioporid/{idservicio}")]
-        public ActionResult ConsultarservicioPorId(int idservicio)
-        {
-            return Ok(_repo.ConsultarServiciosPorId(idservicio));
-        }
-
-        [HttpGet]
-        [Route("consultarserviciopornombres/{nombres}")]
-        public ActionResult ConsultarservicioPorNombres(string nombres)
-        {
-            return Ok(_repo.ConsultarServicioPorNombres(nombres));
-        }
                
         [HttpGet]
         [Route("reporte/{idCliente}")]
-        public ActionResult ConsultarReporte(int idCliente)
+        public IActionResult ConsultarReporte(int idCliente)
         {
             return Ok(_repo.ConsultarProductos(idCliente));
         }

@@ -33,14 +33,14 @@ namespace Api.Controllers
         public ActionResult ActualizarCategoria(CategoriaModel model)
         {
             _repo.ActualizarCategoria(PrepareCategoria(model));
-            return Ok("Exito Actualizado");
+            return Ok();
         }
 
         [HttpPost]
         public ActionResult Guardarcategoria(CategoriaModel model)
         {
             _repo.GuardarCategoria(PrepareCategoria(model));
-            return Ok("Exito");
+            return Ok();
         }
 
         [HttpGet]
@@ -68,7 +68,7 @@ namespace Api.Controllers
         public ActionResult EliminarCatagoria(int idCategoria)
         {
             _repo.EliminarCategoria(idCategoria);
-            return Ok("Exito");
+            return Ok();
         }
 
         [HttpGet]

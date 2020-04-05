@@ -44,12 +44,16 @@ namespace WebBodega
             try
             {
                 var client = new HttpClient();
-                client.BaseAddress = new Uri("https://localhost:44351/api/servicioalojamiento");
 
                 //HTTP POST
-                var postTask = client.PostAsJsonAsync("Servicioalojamiento", producto);
+                var postTask = await client.PostAsJsonAsync("https://localhost:44351/api/ServicioAlojamiento/", new
+                {
+                    NombreServicio = producto.NombreServicio,
+                    IdCliente = producto.IdCliente.Value,
+                    IdBodega = producto.IdBodega.Value,
+                });
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                postTask.Wait();
+
             }
             catch (Exception)
             {

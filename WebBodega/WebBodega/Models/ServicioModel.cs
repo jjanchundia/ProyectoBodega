@@ -17,5 +17,11 @@ namespace WebBodega.Models
         [Required(ErrorMessage = "Seleccione Bodega")]
         public int? IdBodega { get; set; }
         public string NombreBodega { get; set; }
+
+
+
+
+        public int Estado { get; set; }
+
     }
 }

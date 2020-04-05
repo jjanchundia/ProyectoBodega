@@ -4,6 +4,7 @@ using Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using DAO.Services;
+using System.Net;
 
 namespace Api.Controllers
 {
@@ -48,7 +49,7 @@ namespace Api.Controllers
         public ActionResult GuardarBodega(BodegaModel model)
         {
             _repo.GuardarBodega(PrepareBodega(model));
-            return Ok("Exito");
+            return Ok();
         }
 
         [HttpGet]

@@ -51,7 +51,7 @@
     </form>
 </div>
 
-@*<script>
+<script>
 
     $("#IdClientes").change(function () {
         var idCliente = $('select[id=IdClientes]').val();
@@ -64,31 +64,31 @@
     });
 
         
-    function modeloServicio() {
-        var modelo =
-        {
-            NombreServicio: $('#NombreServicio').val(),
-            IdCliente: $('#IdCliente').val(),
-            IdBodega: $('#IdBodega').val(),
-        };
-        return modelo;
-    }
+    //function modeloServicio() {
+    //    var modelo =
+    //    {
+    //        NombreServicio: $('#NombreServicio').val(),
+    //        IdCliente: $('#IdCliente').val(),
+    //        IdBodega: $('#IdBodega').val(),
+    //    };
+    //    return modelo;
+    //}
 
 
-    $("#btnGrabarServicio").click(function () {
-        debugger
+    //$("#btnGrabarServicio").click(function () {
+    //    debugger
 
-        var model = modeloServicio();
-        $.ajax({
-            type: "POST",
-            url: "/ServicioAlojamiento/AgregarServicio",//?handler=Guardar",//"/?handler=OnPost",
-            data: model,
-            headers: {
-                "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
-            },
-        }).done(function (data) {
-            console.log(data.result);
-        });
-    });
+    //    var model = modeloServicio();
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/ServicioAlojamiento/AgregarServicio",//?handler=Guardar",//"/?handler=OnPost",
+    //        data: model,
+    //        headers: {
+    //            "XSRF-TOKEN": $('input:hidden[name="__RequestVerificationToken"]').val()
+    //        },
+    //    }).done(function (data) {
+    //        console.log(data.result);
+    //    });
+    //});
 
-</script>*@
+</script>
